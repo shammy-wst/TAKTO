@@ -1,0 +1,354 @@
+/**
+ * TAKTO Terminal CSS
+ * Styles for the terminal component
+ */
+
+/* Terminal container */
+.takto-terminal-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 30px);
+  background-color: #000;
+  color: #f0f0f0;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* Terminal container when maximized */
+.takto-terminal-container.maximized {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Hide terminal */
+.takto-terminal-container.hidden {
+  display: none;
+}
+
+/* Terminal header - Hidden in fullscreen mode */
+.takto-terminal-header {
+  display: none;
+}
+
+/* Terminal output area */
+.takto-terminal-output {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background-color: #000;
+  color: #ccc;
+}
+
+/* Terminal lines */
+.takto-terminal-line {
+  display: flex;
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Line numbers */
+.takto-terminal-line::before {
+  content: attr(data-line-number);
+  display: flex;
+  align-items: center;
+  min-width: 2rem;
+  margin-right: 0.5rem;
+  color: #666;
+  text-align: right;
+  user-select: none;
+}
+
+/* Terminal input line */
+.takto-terminal-input-line {
+  display: flex;
+  padding: 0.5rem;
+  background-color: #000;
+}
+
+/* Terminal prompt */
+.takto-terminal-prompt {
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Terminal input */
+.takto-terminal-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  caret-color: #ccc;
+}
+
+/* Focus state for input field */
+.takto-terminal-input:focus {
+  outline: 1px dashed #888;
+  outline-offset: 1px;
+}
+
+/* Terminal message types */
+.error {
+  color: #ff6b6b;
+}
+
+.success {
+  color: #63e6be;
+}
+
+.command-echo {
+  color: #868e96;
+  font-style: italic;
+}
+
+.status-todo {
+  color: #ffd43b;
+}
+
+.status-in-progress {
+  color: #4dabf7;
+}
+
+.status-done {
+  color: #63e6be;
+}
+
+/* Terminal welcome message */
+.terminal-welcome {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Strong text */
+.takto-terminal-output strong {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Code formatting */
+.takto-terminal-output code {
+  background-color: #222;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .takto-terminal-container {
+    border: 2px solid ButtonText;
+  }
+
+  .takto-terminal-input {
+    border: 1px solid ButtonText;
+  }
+
+  .takto-terminal-input:focus {
+    outline: 3px solid Highlight;
+  }
+
+  .takto-terminal-line::before {
+    color: ButtonText;
+  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .takto-terminal-line::before {
+    min-width: 1.5rem;
+  }
+
+  .takto-terminal-prompt {
+    margin-right: 0.3rem;
+  }
+
+  .takto-terminal-line {
+    font-size: 0.85rem;
+  }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 480px) {
+  .takto-terminal-output {
+    padding: 0.3rem;
+  }
+
+  .takto-terminal-line {
+    font-size: 0.8rem;
+  }
+
+  .takto-terminal-line::before {
+    min-width: 1.2rem;
+    margin-right: 0.3rem;
+  }
+}
+
+/* Terminal control buttons */
+.takto-terminal-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Terminal control buttons */
+.takto-terminal-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Button hover states with improved contrast */
+.takto-terminal-btn:hover,
+.takto-terminal-btn:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button outlines for keyboard focus */
+.takto-terminal-btn:focus-visible {
+  outline: 2px solid #4d90fe;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(77, 144, 254, 0.5);
+}
+
+/* Close button */
+.terminal-close {
+  color: #ff6b6b;
+}
+
+.terminal-close:hover {
+  background-color: rgba(255, 107, 107, 0.2);
+}
+
+/* Screen reader text for buttons */
+.terminal-maximize::before {
+  content: "Maximize or restore terminal";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.terminal-close::before {
+  content: "Close terminal";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Terminal title */
+.takto-terminal-title {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Keyboard shortcut hint */
+.takto-terminal-keyboard-hint {
+  font-size: 0.75rem;
+  color: #999;
+  margin-left: 10px;
+}
+
+.takto-terminal-keyboard-hint kbd {
+  background-color: #333;
+  border-radius: 3px;
+  border: 1px solid #555;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  color: #ddd;
+  display: inline-block;
+  font-size: 0.7rem;
+  font-family: monospace;
+  padding: 0 4px;
+  margin: 0 2px;
+}
+
+/* Button to open terminal */
+.open-terminal-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #4d90fe;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 9998;
+  transition: all 0.2s ease;
+}
+
+/* Hide open terminal button in full-screen mode */
+.takto-terminal-container.maximized ~ .open-terminal-btn {
+  display: none;
+}
+
+.open-terminal-btn:hover,
+.open-terminal-btn:focus {
+  background-color: #357ae8;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .takto-terminal-container {
+    transition: none;
+  }
+
+  .takto-terminal-btn {
+    transition: none;
+  }
+}

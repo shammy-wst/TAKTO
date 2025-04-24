@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAKTO - Task Manager</title>
+    <link rel="stylesheet" href="app/css/styles.css" />
+    <link rel="stylesheet" href="app/css/terminal.css" />
+    <meta
+      name="description"
+      content="Une application minimaliste de gestion de tâches pour développeurs web"
+    />
+    <script>
+      // Remove no-js class on load to enable JS-specific styles
+      document.documentElement.classList.remove("no-js");
+      document.documentElement.classList.add("js");
+    </script>
+    <style>
+      body {
+        background-color: #000;
+        color: #f8f8f8;
+        margin: 0;
+        padding: 0;
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Skip to content link for keyboard users */
+      .skip-to-content {
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        z-index: 9999;
+      }
+
+      .skip-to-content:focus {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: auto;
+        height: auto;
+        padding: 10px 15px;
+        background-color: #4d90fe;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border-bottom-right-radius: 5px;
+        outline: none;
+      }
+
+      header {
+        background-color: #000;
+        padding: 0;
+        height: 30px;
+        border-bottom: 1px solid #333;
+        display: flex;
+      }
+
+      .header-nav {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header-nav li {
+        display: flex;
+      }
+
+      .header-nav a {
+        color: #ccc;
+        text-decoration: none;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        text-transform: uppercase;
+        transition: background-color 0.2s;
+      }
+
+      .header-nav a:hover,
+      .header-nav a:focus {
+        background-color: #333;
+        color: #fff;
+        outline: 2px solid #4d90fe;
+      }
+
+      .header-nav a.active {
+        background-color: #1e1e1e;
+        color: #fff;
+      }
+
+      main {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /* Fallback styles for no-js */
+      .no-js .fallback-content {
+        display: block;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .no-js .js-only {
+        display: none;
+      }
+
+      /* High contrast mode support */
+      @media (forced-colors: active) {
+        .header-nav a.active {
+          border: 2px solid CanvasText;
+        }
+        .header-nav a:focus {
+          outline: 2px solid Highlight;
+        }
+        input:focus,
+        button:focus {
+          outline: 2px solid Highlight;
+        }
+      }
+
+      /* Responsive design */
+      @media (max-width: 480px) {
+        .header-nav a {
+          padding: 0 10px;
+          font-size: 11px;
+        }
+      }
+    </style>
+    <!-- Preloading fonts removed - using system fonts directly -->
+    <noscript
+      ><style>
+        /* Fallback styles for users without JavaScript */
+        .no-js .fallback-content {
+          display: block;
+        }
+      </style></noscript
+    >
+  </head>
+  <body>
+    <a href="#main-content" class="skip-to-content"
+      >Aller au contenu principal</a
+    >
+    <header role="banner">
+      <nav aria-label="Navigation principale">
+        <ul class="header-nav">
+          <li>
+            <a href="#terminal" class="active" aria-current="page">terminal</a>
+          </li>
+          <li><a href="#readme" onclick="showReadme()">readme</a></li>
+          <li><a href="#faq" onclick="showFaq()">faq</a></li>
+          <li><a href="#team" onclick="showTeam()">our team</a></li>
+          <li>
+            <a href="#accessibility" onclick="showAccessibility()"
+              >accessibility</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content" role="main" tabindex="-1">
+      <!-- Terminal sera injecté ici par le JavaScript -->
+
+      <!-- Version sans JavaScript -->
+      <noscript>
+        <div class="fallback-content">
+          <h1>TAKTO - Gestionnaire de tâches minimaliste</h1>
+          <p>
+            Cette application nécessite JavaScript pour fonctionner
+            correctement.
+          </p>
+          <p>
+            Veuillez activer JavaScript dans votre navigateur pour utiliser
+            l'interface en ligne de commande.
+          </p>
+
+          <h2>Fonctionnalités principales :</h2>
+          <ul>
+            <li>
+              Gestion de projets et tâches via une interface en ligne de
+              commande
+            </li>
+            <li>Stockage local des données dans votre navigateur</li>
+            <li>
+              Interface minimaliste et efficace inspirée des terminaux Unix
+            </li>
+            <li>Navigation 100% accessible au clavier</li>
+            <li>Compatible avec les lecteurs d'écran</li>
+          </ul>
+
+          <h2>Comment utiliser TAKTO :</h2>
+          <ol>
+            <li>Activez JavaScript dans votre navigateur</li>
+            <li>
+              Utilisez la commande "help" pour voir toutes les commandes
+              disponibles
+            </li>
+            <li>
+              Créez des projets et des tâches en utilisant les commandes
+              fournies
+            </li>
+            <li>
+              Naviguez dans l'historique des commandes avec les flèches haut/bas
+            </li>
+            <li>Utilisez Tab pour compléter automatiquement les commandes</li>
+          </ol>
+
+          <h2>Alternatives sans JavaScript :</h2>
+          <p>
+            Pour une gestion de tâches sans JavaScript, vous pouvez utiliser :
+          </p>
+          <ul>
+            <li>Un fichier texte local avec une liste de tâches</li>
+            <li>Des applications natives sur votre ordinateur</li>
+            <li>
+              Des services basés sur des e-mails pour la gestion de tâches
+            </li>
+          </ul>
+        </div>
+      </noscript>
+    </main>
+
+    <script src="app/js/app.js" defer></script>
+    <script src="app/js/terminal.js" defer></script>
+    <script>
+      // Fonctions pour afficher les différentes sections
+      function cleanupTerminal() {
+        // Garder l'instance mais la cacher
+        if (window.globalTerminalInstance) {
+          window.globalTerminalInstance.hide();
+        }
+      }
+
+      function showReadme() {
+        cleanupTerminal();
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = `
+          <div class="terminal-page">
+            <div class="terminal-page-content">
+              <div class="terminal-page-line" data-line-number="1">
+                <span class="terminal-title">README</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="2"></div>
+              <div class="terminal-page-line" data-line-number="3">
+                TAKTO est une application de gestion de tâches en ligne de commande.
+              </div>
+              <div class="terminal-page-line" data-line-number="4"></div>
+              <div class="terminal-page-line" data-line-number="5">
+                Pour commencer, utilisez les commandes suivantes :
+              </div>
+              <div class="terminal-page-line" data-line-number="6"></div>
+              <div class="terminal-page-line" data-line-number="7">
+                <code>help</code> - Affiche la liste des commandes disponibles
+              </div>
+              <div class="terminal-page-line" data-line-number="8">
+                <code>create project "Nom du projet"</code> - Crée un nouveau projet
+              </div>
+              <div class="terminal-page-line" data-line-number="9">
+                <code>ls projects</code> - Liste tous les projets
+              </div>
+              <div class="terminal-page-line" data-line-number="10">
+                <code>create task 1 "Nouvelle tâche"</code> - Crée une tâche dans le projet avec l'ID 1
+              </div>
+              <div class="terminal-page-line" data-line-number="11"></div>
+              <div class="terminal-page-line" data-line-number="12">
+                Pour revenir au terminal, cliquez sur "terminal" dans le menu.
+              </div>
+            </div>
+            <div class="terminal-footer">
+              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
+            </div>
+          </div>
+        `;
+
+        addTerminalPageStyles();
+        updateActiveNav("readme");
+        focusMainContent();
+      }
+
+      function showFaq() {
+        cleanupTerminal();
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = `
+          <div class="terminal-page">
+            <div class="terminal-page-content">
+              <div class="terminal-page-line" data-line-number="1">
+                <span class="terminal-title">FAQ</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="2"></div>
+              <div class="terminal-page-line" data-line-number="3">
+                <span class="terminal-subtitle">Comment créer un projet ?</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="4">
+                Utilisez la commande <code>create project "Nom du projet"</code>.
+              </div>
+              <div class="terminal-page-line" data-line-number="5"></div>
+              <div class="terminal-page-line" data-line-number="6">
+                <span class="terminal-subtitle">Comment ajouter une tâche ?</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="7">
+                Utilisez la commande <code>create task [id_projet] "Nom de la tâche"</code>.
+              </div>
+              <div class="terminal-page-line" data-line-number="8"></div>
+              <div class="terminal-page-line" data-line-number="9">
+                <span class="terminal-subtitle">Comment voir toutes mes tâches ?</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="10">
+                Utilisez la commande <code>ls tasks</code>.
+              </div>
+              <div class="terminal-page-line" data-line-number="11"></div>
+              <div class="terminal-page-line" data-line-number="12">
+                <span class="terminal-subtitle">Les données sont-elles sauvegardées ?</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="13">
+                Oui, toutes les données sont sauvegardées localement dans votre navigateur.
+              </div>
+            </div>
+            <div class="terminal-footer">
+              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
+            </div>
+          </div>
+        `;
+
+        addTerminalPageStyles();
+        updateActiveNav("faq");
+        focusMainContent();
+      }
+
+      function showTeam() {
+        cleanupTerminal();
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = `
+          <div class="terminal-page">
+            <div class="terminal-page-content">
+              <div class="terminal-page-line" data-line-number="1">
+                <span class="terminal-title">Notre équipe</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="2"></div>
+              <div class="terminal-page-line" data-line-number="3">
+                TAKTO a été développé par une équipe passionnée de développeurs
+              </div>
+              <div class="terminal-page-line" data-line-number="4">
+                qui aiment la simplicité et l'efficacité.
+              </div>
+              <div class="terminal-page-line" data-line-number="5"></div>
+              <div class="terminal-page-line" data-line-number="6">
+                Nous croyons que la gestion de tâches devrait être simple et
+              </div>
+              <div class="terminal-page-line" data-line-number="7">
+                accessible, même depuis une ligne de commande.
+              </div>
+              <div class="terminal-page-line" data-line-number="8"></div>
+              <div class="terminal-page-line" data-line-number="9">
+                Pour toute question ou suggestion, utilisez la commande
+              </div>
+              <div class="terminal-page-line" data-line-number="10">
+                <code>help</code> dans le terminal.
+              </div>
+            </div>
+            <div class="terminal-footer">
+              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
+            </div>
+          </div>
+        `;
+
+        addTerminalPageStyles();
+        updateActiveNav("our team");
+        focusMainContent();
+      }
+
+      function showTerminal() {
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = "";
+        updateActiveNav("terminal");
+
+        // Vérifie s'il existe déjà une instance globale
+        if (!window.globalTerminalInstance) {
+          // On initialise le terminal s'il n'existe pas déjà
+          if (window.TaktoTerminal) {
+            window.globalTerminalInstance = new TaktoTerminal();
+
+            // Create a data manager API that the terminal can use
+            const dataManager = {
+              getAllProjects: () => window.projects || [],
+              getProjectById: (id) =>
+                (window.projects || []).find(
+                  (p) => String(p.id) === String(id)
+                ),
+              getAllTasks: () => {
+                const allTasks = [];
+                (window.projects || []).forEach((project) => {
+                  project.tasks.forEach((task) => {
+                    allTasks.push({
+                      ...task,
+                      projectId: project.id,
+                    });
+                  });
+                });
+                return allTasks;
+              },
+              getTaskById: (id) => {
+                for (const project of window.projects || []) {
+                  const task = project.tasks.find(
+                    (t) => String(t.id) === String(id)
+                  );
+                  if (task) {
+                    return { ...task, projectId: project.id };
+                  }
+                }
+                return null;
+              },
+              getTasksByProjectId: (projectId) => {
+                const project = (window.projects || []).find(
+                  (p) => String(p.id) === String(projectId)
+                );
+                return project
+                  ? project.tasks.map((task) => ({
+                      ...task,
+                      projectId: project.id,
+                    }))
+                  : [];
+              },
+              createProject:
+                window.createProject ||
+                ((name) => {
+                  console.error("Project creation function not available");
+                  return null;
+                }),
+              createTask:
+                window.createTask ||
+                ((projectId, name) => {
+                  console.error("Task creation function not available");
+                  return null;
+                }),
+              updateProject:
+                window.updateProject ||
+                ((id, data) => {
+                  console.error("Project update function not available");
+                  return false;
+                }),
+              updateTask:
+                window.updateTask ||
+                ((id, data) => {
+                  console.error("Task update function not available");
+                  return false;
+                }),
+              deleteProject:
+                window.deleteProject ||
+                ((id) => {
+                  console.error("Project deletion function not available");
+                  return false;
+                }),
+              deleteTask:
+                window.deleteTask ||
+                ((id) => {
+                  console.error("Task deletion function not available");
+                  return false;
+                }),
+            };
+
+            // Initialize the terminal with the data manager
+            window.globalTerminalInstance.init(dataManager);
+
+            // Afficher le terminal et lui donner focus
+            window.globalTerminalInstance.show();
+            window.globalTerminalInstance.focus();
+          }
+        } else {
+          // Si le terminal existe déjà, assurez-vous qu'il est visible et a le focus
+          window.globalTerminalInstance.show();
+          window.globalTerminalInstance.focus();
+        }
+
+        focusMainContent();
+      }
+
+      function updateActiveNav(active) {
+        // Met à jour la classe active dans la navigation
+        document.querySelectorAll(".header-nav a").forEach((a) => {
+          if (a.textContent.toLowerCase() === active) {
+            a.classList.add("active");
+            a.setAttribute("aria-current", "page");
+          } else {
+            a.classList.remove("active");
+            a.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      function focusMainContent() {
+        // Focus sur le contenu principal pour les lecteurs d'écran
+        const mainContent = document.getElementById("main-content");
+        if (mainContent) {
+          mainContent.focus();
+        }
+      }
+
+      // Ajouter les styles communs aux pages de type terminal
+      function addTerminalPageStyles() {
+        const styleElement = document.getElementById("terminal-page-styles");
+        if (!styleElement) {
+          const style = document.createElement("style");
+          style.id = "terminal-page-styles";
+          style.textContent = `
+            .terminal-page {
+              font-family: 'Courier New', monospace;
+              background-color: #000;
+              color: #0f0;
+              height: calc(100vh - 30px);
+              overflow: hidden;
+              position: relative;
+              padding: 20px 20px 60px;
+            }
+
+            .terminal-page-content {
+              height: 100%;
+              overflow-y: auto;
+              padding-right: 10px;
+              scrollbar-width: thin;
+              scrollbar-color: #0f0 #000;
+            }
+
+            .terminal-page-content::-webkit-scrollbar {
+              width: 8px;
+            }
+
+            .terminal-page-content::-webkit-scrollbar-track {
+              background: #000;
+            }
+
+            .terminal-page-content::-webkit-scrollbar-thumb {
+              background-color: #0f0;
+              border-radius: 10px;
+              border: 2px solid #000;
+            }
+
+            .terminal-footer {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              padding: 10px 20px;
+              background-color: #000;
+              border-top: 1px solid #0f0;
+              display: flex;
+              justify-content: flex-end;
+            }
+
+            .terminal-page-line {
+              margin-bottom: 8px;
+              line-height: 1.5;
+              min-height: 1.5em;
+              position: relative;
+            }
+
+            .terminal-title {
+              font-size: 1.5em;
+              font-weight: bold;
+              display: block;
+              margin-bottom: 10px;
+              border-bottom: 1px solid #0f0;
+              padding-bottom: 5px;
+            }
+
+            .terminal-subtitle {
+              font-size: 1.2em;
+              font-weight: bold;
+              display: block;
+              margin-top: 15px;
+              margin-bottom: 5px;
+              color: #0ff;
+            }
+
+            .terminal-btn {
+              background-color: #000;
+              color: #0f0;
+              border: 1px solid #0f0;
+              padding: 5px 10px;
+              cursor: pointer;
+              font-family: 'Courier New', monospace;
+              transition: background-color 0.3s, color 0.3s;
+              margin-left: 10px;
+            }
+
+            .terminal-btn:hover {
+              background-color: #0f0;
+              color: #000;
+            }
+
+            .terminal-btn:focus {
+              outline: 2px solid #0ff;
+            }
+
+            .terminal-buttons-container {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 10px;
+              margin: 10px 0;
+            }
+
+            .terminal-buttons-container .terminal-btn {
+              margin-left: 0;
+            }
+
+            kbd {
+              background-color: #333;
+              border-radius: 3px;
+              border: 1px solid #666;
+              box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+              color: #fff;
+              display: inline-block;
+              font-size: 0.85em;
+              padding: 2px 5px;
+              margin: 0 2px;
+            }
+
+            code {
+              background-color: rgba(15, 255, 15, 0.1);
+              padding: 2px 4px;
+              border-radius: 3px;
+            }
+
+            /* Style pour le mode contraste élevé */
+            .high-contrast .terminal-page {
+              background-color: #000;
+              color: #fff;
+            }
+
+            .high-contrast .terminal-btn {
+              background-color: #000;
+              color: #fff;
+              border-color: #fff;
+            }
+
+            .high-contrast .terminal-btn:hover {
+              background-color: #fff;
+              color: #000;
+            }
+
+            .high-contrast .terminal-title,
+            .high-contrast .terminal-footer {
+              border-color: #fff;
+            }
+
+            .high-contrast .terminal-subtitle {
+              color: #ff0;
+            }
+
+            .high-contrast code {
+              background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .high-contrast kbd {
+              background-color: #fff;
+              color: #000;
+              border-color: #ccc;
+            }
+
+            /* Styles responsive */
+            @media (max-width: 768px) {
+              .terminal-page {
+                padding: 15px 15px 50px;
+              }
+
+              .terminal-footer {
+                padding: 8px 15px;
+              }
+
+              .terminal-buttons-container {
+                gap: 6px;
+              }
+
+              .terminal-btn {
+                padding: 4px 8px;
+                font-size: 0.9em;
+              }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+
+      // Show accessibility page
+      function showAccessibility() {
+        cleanupTerminal();
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = `
+          <div class="terminal-page">
+            <div class="terminal-page-content">
+              <div class="terminal-page-line" data-line-number="1">
+                <span class="terminal-title">Accessibility</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="2"></div>
+              
+              <div class="terminal-page-line" data-line-number="3">
+                <span class="terminal-subtitle">Keyboard Shortcuts</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="4">
+                TAKTO is fully accessible using the keyboard. Here are the available shortcuts:
+              </div>
+              <div class="terminal-page-line" data-line-number="5"></div>
+              <div class="terminal-page-line" data-line-number="6">
+                <kbd>Alt + T</kbd> - Switch to Terminal
+              </div>
+              <div class="terminal-page-line" data-line-number="7">
+                <kbd>Alt + R</kbd> - Switch to README
+              </div>
+              <div class="terminal-page-line" data-line-number="8">
+                <kbd>Alt + F</kbd> - Switch to FAQ
+              </div>
+              <div class="terminal-page-line" data-line-number="9">
+                <kbd>Alt + O</kbd> - Switch to Our Team
+              </div>
+              <div class="terminal-page-line" data-line-number="10">
+                <kbd>Alt + A</kbd> - Switch to Accessibility
+              </div>
+              <div class="terminal-page-line" data-line-number="11">
+                <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> - Navigate between interactive elements
+              </div>
+              <div class="terminal-page-line" data-line-number="12">
+                <kbd>Enter</kbd> / <kbd>Space</kbd> - Activate buttons and links
+              </div>
+              <div class="terminal-page-line" data-line-number="13"></div>
+              
+              <div class="terminal-page-line" data-line-number="14">
+                <span class="terminal-subtitle">Common Terminal Commands</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="15">
+                Quick guide to essential terminal commands:
+              </div>
+              <div class="terminal-page-line" data-line-number="16"></div>
+              <div class="terminal-page-line" data-line-number="17">
+                <div class="terminal-buttons-container">
+                  <button class="terminal-btn" onclick="runCommand('help')">help</button>
+                  <button class="terminal-btn" onclick="runCommand('ls projects')">ls projects</button>
+                  <button class="terminal-btn" onclick="runCommand('ls tasks')">ls tasks</button>
+                  <button class="terminal-btn" onclick="runCommand('create project \\"New Project\\"')">create project</button>
+                  <button class="terminal-btn" onclick="runCommand('clear')">clear</button>
+                  <button class="terminal-btn" onclick="runCommand('about')">about</button>
+                </div>
+              </div>
+              <div class="terminal-page-line" data-line-number="18">
+                These buttons will run the command directly in the terminal when clicked.
+              </div>
+              <div class="terminal-page-line" data-line-number="19"></div>
+              
+              <div class="terminal-page-line" data-line-number="20">
+                <span class="terminal-subtitle">Screen Reader Support</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="21">
+                TAKTO is optimized for screen readers with:
+              </div>
+              <div class="terminal-page-line" data-line-number="22">
+                • Proper ARIA landmarks and roles
+              </div>
+              <div class="terminal-page-line" data-line-number="23">
+                • Screen reader announcements for important messages
+              </div>
+              <div class="terminal-page-line" data-line-number="24">
+                • Accessible keyboard navigation
+              </div>
+              <div class="terminal-page-line" data-line-number="25">
+                • Focus management and visible focus indicators
+              </div>
+              <div class="terminal-page-line" data-line-number="26"></div>
+              
+              <div class="terminal-page-line" data-line-number="27">
+                <span class="terminal-subtitle">Visual Adaptations</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="28">
+                <div class="terminal-buttons-container">
+                  <button class="terminal-btn" onclick="toggleHighContrast()" aria-pressed="false">Toggle High Contrast</button>
+                  <button class="terminal-btn" onclick="increaseFontSize()">Increase Font Size</button>
+                  <button class="terminal-btn" onclick="decreaseFontSize()">Decrease Font Size</button>
+                  <button class="terminal-btn" onclick="resetFontSize()">Reset Font Size</button>
+                </div>
+              </div>
+              <div class="terminal-page-line" data-line-number="29"></div>
+              
+              <div class="terminal-page-line" data-line-number="30">
+                <span class="terminal-subtitle">WCAG 2.1 Compliance</span>
+              </div>
+              <div class="terminal-page-line" data-line-number="31">
+                TAKTO follows these Web Content Accessibility Guidelines:
+              </div>
+              <div class="terminal-page-line" data-line-number="32">
+                • Perceivable - Information is presented in ways all users can perceive
+              </div>
+              <div class="terminal-page-line" data-line-number="33">
+                • Operable - User interface and navigation are operable by everyone
+              </div>
+              <div class="terminal-page-line" data-line-number="34">
+                • Understandable - Information and operation are understandable
+              </div>
+              <div class="terminal-page-line" data-line-number="35">
+                • Robust - Content is compatible with current and future tools
+              </div>
+            </div>
+            <div class="terminal-footer">
+              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
+            </div>
+          </div>
+        `;
+
+        addTerminalPageStyles();
+
+        // Mise à jour du bouton de contraste
+        const isHighContrast =
+          document.body.classList.contains("high-contrast");
+        const contrastButton = document.querySelector(
+          '.terminal-btn[onclick="toggleHighContrast()"]'
+        );
+        if (contrastButton && isHighContrast) {
+          contrastButton.setAttribute("aria-pressed", "true");
+        }
+
+        updateActiveNav("accessibility");
+        focusMainContent();
+      }
+
+      // Function to run commands from the accessibility page
+      function runCommand(command) {
+        showTerminal();
+        setTimeout(() => {
+          const terminal = document.querySelector(".takto-terminal-input");
+          if (terminal) {
+            terminal.value = command;
+            // Trigger Enter key event
+            const event = new KeyboardEvent("keydown", {
+              key: "Enter",
+              code: "Enter",
+              keyCode: 13,
+              which: 13,
+              bubbles: true,
+            });
+            terminal.dispatchEvent(event);
+          }
+        }, 100);
+      }
+
+      // Accessibility visual adaptation functions
+      let currentFontSize = 100; // percentage
+
+      function toggleHighContrast() {
+        document.body.classList.toggle("high-contrast");
+        const isHighContrast =
+          document.body.classList.contains("high-contrast");
+
+        // Update aria-pressed attribute on the button
+        const contrastButton = document.querySelector(
+          '.terminal-btn[onclick="toggleHighContrast()"]'
+        );
+        if (contrastButton) {
+          contrastButton.setAttribute(
+            "aria-pressed",
+            isHighContrast.toString()
+          );
+        }
+
+        if (isHighContrast) {
+          const highContrastStyle = document.createElement("style");
+          highContrastStyle.id = "high-contrast-style";
+          highContrastStyle.textContent = `
+            body.high-contrast {
+              background-color: #000 !important;
+              color: #fff !important;
+            }
+            body.high-contrast a {
+              color: #ffff00 !important;
+              text-decoration: underline !important;
+            }
+            body.high-contrast .header-nav a.active {
+              background-color: #ffff00 !important;
+              color: #000 !important;
+              font-weight: bold !important;
+              text-decoration: none !important;
+            }
+            body.high-contrast button, 
+            body.high-contrast .cmd-btn, 
+            body.high-contrast .adapt-btn {
+              background-color: #ffff00 !important;
+              color: #000 !important;
+              border: 2px solid #fff !important;
+              font-weight: bold !important;
+            }
+            body.high-contrast .cmd-btn:focus, 
+            body.high-contrast .adapt-btn:focus,
+            body.high-contrast a:focus {
+              outline: 3px solid #ffff00 !important;
+              outline-offset: 2px !important;
+            }
+            body.high-contrast .takto-terminal-container {
+              background-color: #000 !important;
+              border: 2px solid #fff !important;
+            }
+            body.high-contrast .takto-terminal-line::before {
+              color: #ffff00 !important;
+            }
+            body.high-contrast .takto-terminal-prompt {
+              color: #ffff00 !important;
+            }
+            body.high-contrast .takto-terminal-input {
+              color: #fff !important;
+              background-color: #000 !important;
+              border-bottom: 1px solid #ffff00 !important;
+            }
+          `;
+          document.head.appendChild(highContrastStyle);
+        } else {
+          const style = document.getElementById("high-contrast-style");
+          if (style) style.remove();
+        }
+      }
+
+      function increaseFontSize() {
+        currentFontSize += 10;
+        updateFontSize();
+      }
+
+      function decreaseFontSize() {
+        if (currentFontSize > 80) {
+          currentFontSize -= 10;
+          updateFontSize();
+        }
+      }
+
+      function resetFontSize() {
+        currentFontSize = 100;
+        updateFontSize();
+      }
+
+      function updateFontSize() {
+        document.body.style.fontSize = `${currentFontSize}%`;
+      }
+
+      // Gestion des liens de navigation
+      document.querySelectorAll(".header-nav a").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          if (link.getAttribute("href") === "#terminal") {
+            e.preventDefault();
+            showTerminal();
+          }
+        });
+
+        // Pour l'accessibilité, on ajoute la navigation au clavier
+        link.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            link.click();
+          }
+        });
+      });
+
+      // Setup keyboard shortcuts for navigation
+      document.addEventListener("keydown", function (e) {
+        // Only process if Alt key is pressed
+        if (e.altKey) {
+          switch (e.key) {
+            case "t": // Alt+T: Terminal
+              e.preventDefault();
+              showTerminal();
+              break;
+            case "r": // Alt+R: Readme
+              e.preventDefault();
+              showReadme();
+              break;
+            case "f": // Alt+F: FAQ
+              e.preventDefault();
+              showFaq();
+              break;
+            case "o": // Alt+O: Our Team
+              e.preventDefault();
+              showTeam();
+              break;
+            case "a": // Alt+A: Accessibility
+              e.preventDefault();
+              showAccessibility();
+              break;
+          }
+        }
+      });
+
+      // Show the terminal initially
+      showTerminal();
+    </script>
+  </body>
+</html>
