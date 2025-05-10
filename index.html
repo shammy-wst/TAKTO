@@ -149,6 +149,55 @@
     >
   </head>
   <body>
+    <div
+      id="landing"
+      style="
+        position: fixed;
+        inset: 0;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.7s;
+      "
+    >
+      <h1 style="color: #0f0; font-size: 3rem; letter-spacing: 0.1em">TAKTO</h1>
+      <button
+        id="enter-btn"
+        style="
+          margin-top: 2rem;
+          font-size: 1.2rem;
+          padding: 0.7em 2em;
+          border-radius: 4px;
+          border: 2px solid #0f0;
+          background: #000;
+          color: #0f0;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        "
+      >
+        Entrer
+      </button>
+      <div
+        style="
+          margin-top: 2.5rem;
+          text-align: center;
+          color: #aaa;
+          font-size: 1.05rem;
+          max-width: 90vw;
+        "
+      >
+        <div>
+          <strong>Crédits :</strong> Icham, Samy, Wissem, Victor, Maxime
+        </div>
+        <div style="margin-top: 0.7em; font-size: 0.98em">
+          Entreprise : <strong>3W</strong> en collaboration avec l'école
+          <strong>HETIC</strong> pour un projet scolaire.
+        </div>
+      </div>
+    </div>
     <a href="#main-content" class="skip-to-content"
       >Aller au contenu principal</a
     >
@@ -170,13 +219,40 @@
       </nav>
     </header>
 
-    <main id="main-content" role="main" tabindex="-1" class="main-flex">
+    <main
+      id="main-content"
+      role="main"
+      tabindex="-1"
+      class="main-flex"
+      style="display: none"
+    >
       <!-- Terminal et fiche explicative injectés ici par JS -->
     </main>
 
     <script src="app/js/app.js" defer></script>
     <script src="app/js/terminal.min.js" defer></script>
     <script>
+      // Landing screen logic
+      window.addEventListener("DOMContentLoaded", function () {
+        var landing = document.getElementById("landing");
+        var mainContent = document.getElementById("main-content");
+        var enterBtn = document.getElementById("enter-btn");
+        function showApp() {
+          landing.style.opacity = "0";
+          setTimeout(function () {
+            landing.style.display = "none";
+            mainContent.style.display = "";
+            mainContent.focus();
+          }, 700); // correspond à la durée du fade
+        }
+        enterBtn.addEventListener("click", showApp);
+        enterBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") showApp();
+        });
+        // Focus visible sur le bouton
+        enterBtn.focus();
+      });
+
       // Fonctions pour afficher les différentes sections
       function cleanupTerminal() {
         // Garder l'instance mais la cacher
