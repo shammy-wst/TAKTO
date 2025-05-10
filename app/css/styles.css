@@ -16,14 +16,236 @@
   padding: 0;
 }
 
+html,
 body {
-  font-family: "Courier New", monospace;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  height: 100vh;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  background: #111;
+  color: #f0f0f0;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  flex: 1 1 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+header {
+  flex: 0 0 30px;
+  background: #000;
+  border-bottom: 1px solid #333;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  z-index: 10;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.main-flex {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 0;
+  height: 100%;
+  width: 100vw;
+  background: #111;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Terminal à gauche, aide à droite */
+.takto-terminal {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#help-keyboard {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 400px;
+  background: #181818;
+  color: #f0f0f0;
+  border-left: 1px solid #222;
+  padding: 0 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  margin: 0 !important;
+}
+
+.help-keyboard-box {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 24px 18px 18px 18px;
+}
+
+.help-keyboard-box h2 {
+  font-size: 1.2em;
+  margin: 0 0 12px 0;
+  color: #0f0;
+  font-weight: bold;
+}
+
+.help-keyboard-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.help-keyboard-box li {
+  margin-bottom: 6px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.help-keyboard-box kbd {
+  background: #222;
+  color: #0f0;
+  border-radius: 3px;
+  border: 1px solid #333;
+  padding: 2px 6px;
+  margin-right: 8px;
+  font-size: 0.95em;
+  font-family: inherit;
+}
+
+.help-keyboard-desc {
+  font-size: 0.95em;
+  color: #aaa;
+  margin-top: 10px;
+}
+
+/* Pages secondaires (README, FAQ, etc.) */
+.terminal-page {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  background: #181818;
+  color: #f0f0f0;
+  min-height: 0;
+  height: 100%;
+  width: 100vw;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.terminal-page-content {
+  flex: 1 1 auto;
+  padding: 18px 12px 12px 12px;
+  overflow-y: auto;
+  font-size: 1em;
+  font-family: inherit;
+  min-height: 0;
+  height: 100%;
+  margin: 0 !important;
+}
+
+.terminal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #0f0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #0f0;
+  padding-bottom: 5px;
+  display: block;
+}
+
+.terminal-subtitle {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #0ff;
+  margin: 12px 0 6px 0;
+  display: block;
+}
+
+.terminal-footer {
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  background: #111;
+  border-top: 1px solid #222;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 !important;
+}
+
+.terminal-btn {
+  background: #000;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+.terminal-btn:hover,
+.terminal-btn:focus {
+  background: #0f0;
+  color: #000;
+  outline: 2px solid #0ff;
+}
+
+@media (max-width: 900px) {
+  .main-flex {
+    flex-direction: column;
+  }
+  #help-keyboard {
+    max-width: 100vw;
+    min-width: 0;
+    width: 100vw;
+    border-left: none;
+    border-top: 1px solid #222;
+    padding: 0;
+    height: auto;
+  }
+  .takto-terminal {
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .terminal-page-content,
+  .help-keyboard-box {
+    padding: 10px 4px;
+    font-size: 0.95em;
+  }
+  .terminal-title {
+    font-size: 1.1em;
+  }
 }
 
 /* Typography */
@@ -330,4 +552,27 @@ footer {
     border: 1px solid #ddd;
     page-break-inside: avoid;
   }
+}
+
+button,
+.terminal-btn,
+.takto-terminal-input,
+input,
+textarea,
+select,
+.header-nav a {
+  outline: none;
+  transition: box-shadow 0.2s, outline 0.2s;
+}
+button:focus,
+.terminal-btn:focus,
+.takto-terminal-input:focus,
+input:focus,
+textarea:focus,
+select:focus,
+.header-nav a:focus {
+  outline: 2.5px solid #0f0 !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #0f0440;
+  z-index: 2;
 }

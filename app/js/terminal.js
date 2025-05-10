@@ -325,16 +325,18 @@ class TaktoTerminal {
         this.input.value = "";
       }
     }
-    // Tab key: command autocompletion
-    else if (event.key === "Tab") {
+    // Tab key: command autocompletion (uniquement si pas de Shift)
+    else if (event.key === "Tab" && !event.shiftKey) {
+      // Si l'input est vide, laisser le focus sortir normalement
+      if (!this.input.value.trim()) {
+        return;
+      }
       event.preventDefault();
       const partial = this.input.value.trim().split(/\s+/)[0].toLowerCase();
-
       if (partial) {
         const matches = Object.keys(this.commands).filter((cmd) =>
           cmd.startsWith(partial)
         );
-
         if (matches.length === 1) {
           // Complete the command if there's an exact match
           this.input.value = matches[0] + " ";
@@ -348,6 +350,8 @@ class TaktoTerminal {
         }
       }
     }
+    // Shift+Tab : laisser sortir le focus naturellement
+    // (pas de else, donc comportement natif)
   }
 
   // Print a line to the terminal

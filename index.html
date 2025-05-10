@@ -170,66 +170,8 @@
       </nav>
     </header>
 
-    <main id="main-content" role="main" tabindex="-1">
-      <!-- Terminal sera injecté ici par le JavaScript -->
-
-      <!-- Version sans JavaScript -->
-      <noscript>
-        <div class="fallback-content">
-          <h1>TAKTO - Gestionnaire de tâches minimaliste</h1>
-          <p>
-            Cette application nécessite JavaScript pour fonctionner
-            correctement.
-          </p>
-          <p>
-            Veuillez activer JavaScript dans votre navigateur pour utiliser
-            l'interface en ligne de commande.
-          </p>
-
-          <h2>Fonctionnalités principales :</h2>
-          <ul>
-            <li>
-              Gestion de projets et tâches via une interface en ligne de
-              commande
-            </li>
-            <li>Stockage local des données dans votre navigateur</li>
-            <li>
-              Interface minimaliste et efficace inspirée des terminaux Unix
-            </li>
-            <li>Navigation 100% accessible au clavier</li>
-            <li>Compatible avec les lecteurs d'écran</li>
-          </ul>
-
-          <h2>Comment utiliser TAKTO :</h2>
-          <ol>
-            <li>Activez JavaScript dans votre navigateur</li>
-            <li>
-              Utilisez la commande "help" pour voir toutes les commandes
-              disponibles
-            </li>
-            <li>
-              Créez des projets et des tâches en utilisant les commandes
-              fournies
-            </li>
-            <li>
-              Naviguez dans l'historique des commandes avec les flèches haut/bas
-            </li>
-            <li>Utilisez Tab pour compléter automatiquement les commandes</li>
-          </ol>
-
-          <h2>Alternatives sans JavaScript :</h2>
-          <p>
-            Pour une gestion de tâches sans JavaScript, vous pouvez utiliser :
-          </p>
-          <ul>
-            <li>Un fichier texte local avec une liste de tâches</li>
-            <li>Des applications natives sur votre ordinateur</li>
-            <li>
-              Des services basés sur des e-mails pour la gestion de tâches
-            </li>
-          </ul>
-        </div>
-      </noscript>
+    <main id="main-content" role="main" tabindex="-1" class="main-flex">
+      <!-- Terminal et fiche explicative injectés ici par JS -->
     </main>
 
     <script src="app/js/app.js" defer></script>
@@ -278,9 +220,6 @@
                 Pour revenir au terminal, cliquez sur "terminal" dans le menu.
               </div>
             </div>
-            <div class="terminal-footer">
-              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
-            </div>
           </div>
         `;
 
@@ -327,9 +266,6 @@
                 Oui, toutes les données sont sauvegardées localement dans votre navigateur.
               </div>
             </div>
-            <div class="terminal-footer">
-              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
-            </div>
           </div>
         `;
 
@@ -369,9 +305,6 @@
                 <code>help</code> dans le terminal.
               </div>
             </div>
-            <div class="terminal-footer">
-              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
-            </div>
           </div>
         `;
 
@@ -380,111 +313,114 @@
         focusMainContent();
       }
 
+      function getCtrlKeyLabel() {
+        return navigator.platform.toUpperCase().indexOf("MAC") >= 0
+          ? "Cmd"
+          : "Ctrl";
+      }
+
+      function renderHelpKeyboardBox() {
+        const ctrl = getCtrlKeyLabel();
+        return `
+          <div class="help-keyboard-box">
+            <h2>Navigation sans souris</h2>
+            <ul>
+              <li><kbd>${ctrl} + 1</kbd> : Aller au terminal</li>
+              <li><kbd>${ctrl} + 2</kbd> : README</li>
+              <li><kbd>${ctrl} + 3</kbd> : FAQ</li>
+              <li><kbd>${ctrl} + 4</kbd> : Notre équipe</li>
+              <li><kbd>${ctrl} + 5</kbd> : Accessibilité</li>
+              <li><kbd>Tab</kbd> : Naviguer entre les éléments</li>
+              <li><kbd>Entrée</kbd> : Valider/Activer</li>
+              <li><kbd>${ctrl} + H</kbd> : Commandes terminal</li>
+              <li><kbd>${ctrl} + Maj + L</kbd> : Liste projets</li>
+              <li><kbd>${ctrl} + Maj + T</kbd> : Liste tâches</li>
+              <li><kbd>${ctrl} + Maj + C</kbd> : Effacer le terminal</li>
+            </ul>
+            <p class="help-keyboard-desc">Tout est navigable au clavier. Aucun usage de la souris n'est requis. Focus visible partout.</p>
+          </div>
+        `;
+      }
+
       function showTerminal() {
         const mainContent = document.getElementById("main-content");
         mainContent.innerHTML = "";
         updateActiveNav("terminal");
-
-        // Vérifie s'il existe déjà une instance globale
-        if (!window.globalTerminalInstance) {
-          // On initialise le terminal s'il n'existe pas déjà
-          if (window.TaktoTerminal) {
-            window.globalTerminalInstance = new TaktoTerminal();
-
-            // Create a data manager API that the terminal can use
-            const dataManager = {
-              getAllProjects: () => window.projects || [],
-              getProjectById: (id) =>
-                (window.projects || []).find(
-                  (p) => String(p.id) === String(id)
-                ),
-              getAllTasks: () => {
-                const allTasks = [];
-                (window.projects || []).forEach((project) => {
-                  project.tasks.forEach((task) => {
-                    allTasks.push({
-                      ...task,
-                      projectId: project.id,
-                    });
-                  });
-                });
-                return allTasks;
-              },
-              getTaskById: (id) => {
-                for (const project of window.projects || []) {
-                  const task = project.tasks.find(
-                    (t) => String(t.id) === String(id)
-                  );
-                  if (task) {
-                    return { ...task, projectId: project.id };
-                  }
-                }
-                return null;
-              },
-              getTasksByProjectId: (projectId) => {
-                const project = (window.projects || []).find(
-                  (p) => String(p.id) === String(projectId)
-                );
-                return project
-                  ? project.tasks.map((task) => ({
-                      ...task,
-                      projectId: project.id,
-                    }))
-                  : [];
-              },
-              createProject:
-                window.createProject ||
-                ((name) => {
-                  console.error("Project creation function not available");
-                  return null;
-                }),
-              createTask:
-                window.createTask ||
-                ((projectId, name) => {
-                  console.error("Task creation function not available");
-                  return null;
-                }),
-              updateProject:
-                window.updateProject ||
-                ((id, data) => {
-                  console.error("Project update function not available");
-                  return false;
-                }),
-              updateTask:
-                window.updateTask ||
-                ((id, data) => {
-                  console.error("Task update function not available");
-                  return false;
-                }),
-              deleteProject:
-                window.deleteProject ||
-                ((id) => {
-                  console.error("Project deletion function not available");
-                  return false;
-                }),
-              deleteTask:
-                window.deleteTask ||
-                ((id) => {
-                  console.error("Task deletion function not available");
-                  return false;
-                }),
-            };
-
-            // Initialize the terminal with the data manager
-            window.globalTerminalInstance.init(dataManager);
-
-            // Afficher le terminal et lui donner focus
-            window.globalTerminalInstance.show();
-            window.globalTerminalInstance.focus();
-          }
-        } else {
-          // Si le terminal existe déjà, assurez-vous qu'il est visible et a le focus
-          window.globalTerminalInstance.show();
-          window.globalTerminalInstance.focus();
+        const terminalDiv = ensureTerminalInDOM();
+        if (terminalDiv) {
+          terminalDiv.classList.remove("hidden");
+          terminalDiv.style.display = "flex";
+          terminalDiv.style.flex = "1 1 0";
+          terminalDiv.style.minWidth = "0";
+          terminalDiv.style.width = "100%";
+          terminalDiv.style.overflowY = "auto";
+          terminalDiv.style.order = "1";
         }
-
+        // Fiche explicative: toujours à droite sur la home
+        let helpDiv = document.getElementById("help-keyboard");
+        if (!helpDiv) {
+          helpDiv = document.createElement("aside");
+          helpDiv.id = "help-keyboard";
+          helpDiv.setAttribute("aria-label", "Aide navigation clavier");
+        }
+        helpDiv.innerHTML = renderHelpKeyboardBox();
+        helpDiv.style.flex = "1 1 0";
+        helpDiv.style.minWidth = "0";
+        helpDiv.style.width = "100%";
+        helpDiv.style.overflowY = "auto";
+        helpDiv.style.order = "2";
+        mainContent.appendChild(helpDiv);
         focusMainContent();
       }
+
+      function hideTerminalOnSecondaryPages() {
+        const terminalDiv = ensureTerminalInDOM();
+        if (terminalDiv) {
+          terminalDiv.classList.add("hidden");
+          terminalDiv.style.display = "none";
+        }
+        // Supprimer la fiche explicative si elle existe
+        const helpDiv = document.getElementById("help-keyboard");
+        if (helpDiv && helpDiv.parentNode)
+          helpDiv.parentNode.removeChild(helpDiv);
+      }
+
+      function ensureTerminalInDOM() {
+        const mainContent = document.getElementById("main-content");
+        let terminalDiv = document.querySelector(".takto-terminal");
+        if (!terminalDiv && window.globalTerminalInstance) {
+          terminalDiv = window.globalTerminalInstance.container;
+        }
+        if (!terminalDiv && window.TaktoTerminal) {
+          window.globalTerminalInstance = new TaktoTerminal();
+          window.globalTerminalInstance.init(dataManager);
+          terminalDiv = window.globalTerminalInstance.container;
+        }
+        if (terminalDiv && !mainContent.contains(terminalDiv)) {
+          terminalDiv.style.order = "1";
+          mainContent.appendChild(terminalDiv);
+        }
+        return terminalDiv;
+      }
+
+      // Le bouton d'ouverture du terminal retire la classe hidden et affiche le terminal
+      function ensureTerminalOpenBtn() {
+        if (!document.querySelector(".takto-terminal-open-btn")) {
+          const btn = document.createElement("button");
+          btn.className = "takto-terminal-open-btn";
+          btn.innerHTML = "&gt;_";
+          btn.setAttribute("aria-label", "Open terminal");
+          btn.onclick = () => {
+            showTerminal();
+            if (window.globalTerminalInstance) {
+              window.globalTerminalInstance.show();
+              window.globalTerminalInstance.focus();
+            }
+          };
+          document.body.appendChild(btn);
+        }
+      }
+      window.addEventListener("DOMContentLoaded", ensureTerminalOpenBtn);
 
       function updateActiveNav(active) {
         // Met à jour la classe active dans la navigation
@@ -808,9 +744,6 @@
                 • Robust - Content is compatible with current and future tools
               </div>
             </div>
-            <div class="terminal-footer">
-              <button class="terminal-btn" onclick="showTerminal()">Retour au terminal</button>
-            </div>
           </div>
         `;
 
@@ -963,31 +896,60 @@
         });
       });
 
-      // Setup keyboard shortcuts for navigation
+      // Setup keyboard shortcuts for navigation (toujours actif)
       document.addEventListener("keydown", function (e) {
-        // Only process if Alt key is pressed
-        if (e.altKey) {
+        const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+        const ctrlKey = isMac ? e.metaKey : e.ctrlKey;
+        const tag = document.activeElement.tagName.toLowerCase();
+        if (["input", "textarea", "select"].includes(tag)) return;
+        // Navigation entre pages
+        if (ctrlKey && !e.shiftKey && !e.altKey) {
           switch (e.key) {
-            case "t": // Alt+T: Terminal
+            case "1":
               e.preventDefault();
               showTerminal();
               break;
-            case "r": // Alt+R: Readme
+            case "2":
               e.preventDefault();
               showReadme();
               break;
-            case "f": // Alt+F: FAQ
+            case "3":
               e.preventDefault();
               showFaq();
               break;
-            case "o": // Alt+O: Our Team
+            case "4":
               e.preventDefault();
               showTeam();
               break;
-            case "a": // Alt+A: Accessibility
+            case "5":
               e.preventDefault();
               showAccessibility();
               break;
+            case "h":
+            case "H":
+              e.preventDefault();
+              if (window.globalTerminalInstance)
+                window.globalTerminalInstance.execute("help");
+              break;
+          }
+        }
+        // Terminal : Ctrl+Maj+L, Ctrl+Maj+T, Ctrl+Maj+C
+        if (ctrlKey && e.shiftKey && !e.altKey) {
+          if (window.globalTerminalInstance) {
+            switch (e.key.toLowerCase()) {
+              case "l":
+                e.preventDefault();
+                window.globalTerminalInstance.execute("ls projects");
+                break;
+              case "t":
+                e.preventDefault();
+                window.globalTerminalInstance.execute("ls tasks");
+                break;
+              case "c":
+                e.preventDefault();
+                window.globalTerminalInstance.execute("clear");
+                break;
+            }
           }
         }
       });
