@@ -1,53 +1,117 @@
-# TAKTO - Gestionnaire de Tâches Minimaliste
+# TAKTO - Gestionnaire de Tâches Minimaliste et Accessible
 
-TAKTO est une application web légère et minimaliste conçue pour les développeurs web qui souhaitent organiser leurs projets et tâches sans utiliser d'applications lourdes comme Trello, Jira ou Notion.
+**Projet réalisé par Icham, Samy, Wissem, Victor, Maxime**  
+Entreprise : **3W** en collaboration avec l'école **HETIC** (projet scolaire, Avril-Mai 2025)
 
-## Caractéristiques
+---
 
-- **Ultra-légère et minimaliste** : aucune dépendance externe
-- **Organisation par projets et tâches**
-- **Statuts simples** : À faire, En cours, Terminé
-- **Navigation au clavier** avec focus visible pour l'accessibilité
-- **Stockage local** via localStorage (aucun compte ni base de données nécessaire)
-- **Design console** adapté aux développeurs
+## 🎯 Objectif du projet
+
+Développer une application web ultra-légère (HTML/CSS/JS minimal), accessible (WCAG 2.1 AAA), compatible avec de vieux navigateurs, performante et sobre, sans framework ni dépendance externe, et déployée sur une plateforme statique (Vercel).
+
+---
+
+## 🚀 Fonctionnalités principales
+
+- **Organisation par projets et tâches** (statuts : À faire, En cours, Terminé)
+- **Interface type terminal** pour les commandes et la navigation
+- **Navigation 100% clavier** (focus visible, skip to content, raccourcis universels)
+- **Contraste fort** et design sobre (norme AAA)
+- **Stockage local** (localStorage, aucune donnée externe)
 - **Fonctionne sans JavaScript** (fallback HTML/CSS)
-- **Contrastes forts** pour une meilleure accessibilité (norme AAA)
+- **Responsive** (mobile, tablette, desktop)
+- **Ultra-rapide** (minification JS, CSS fusionné, favicon optimisé)
+- **Aucun framework, aucune dépendance externe**
 
-## Comment l'utiliser
+---
 
-1. Clonez ce dépôt ou téléchargez les fichiers
-2. Ouvrez simplement le fichier `index.html` dans votre navigateur
-3. Commencez à créer et organiser vos projets et tâches
+## ♿️ Accessibilité & bonnes pratiques
 
-## Navigation au clavier
+- Respect strict des normes **WCAG 2.1** (AA/AAA)
+- Balises sémantiques (`<header>`, `<nav>`, `<main>`, `<aside>`, etc.)
+- Rôles ARIA uniquement là où c'est utile
+- Focus visible sur tous les éléments interactifs
+- Lecture linéaire et navigation fluide au clavier
+- Compatibilité lecteurs d'écran
+- Fallback HTML/CSS si JS désactivé
 
-L'application prend en charge les raccourcis clavier suivants :
+---
 
-- `Alt + P` : Créer un nouveau projet
-- `Alt + T` : Créer une nouvelle tâche (lorsque vous êtes dans la vue des tâches)
-- `Alt + B` : Retourner à la liste des projets (lorsque vous êtes dans la vue des tâches)
-- `Echap` : Fermer les modales ouvertes
-- `Tab` : Naviguer entre les éléments interactifs
-- `Entrée` : Sélectionner un élément
+## ⚡️ Performance & sobriété
 
-## Persistance des données
+- **Minification du JS** (`terminal.min.js`)
+- **Fusion des CSS** (un seul fichier `styles.css`)
+- **Favicon optimisé** (plus d'erreur 404)
+- **Aucune image lourde, aucune police externe**
+- **Aucune requête HTTP récurrente**
+- **Audit Lighthouse** : score élevé en accessibilité, performance, SEO
 
-Toutes les données sont stockées localement dans le navigateur via localStorage. Aucune information n'est envoyée à un serveur externe. Cela signifie que vos données sont privées, mais aussi qu'elles sont liées au navigateur que vous utilisez.
+---
 
-## Fonctionnement sans JavaScript
+## 🖥️ Déploiement
 
-L'application est conçue pour fonctionner même sans JavaScript, offrant une expérience de base en HTML/CSS pur. Cependant, les fonctionnalités avancées comme l'ajout dynamique de projets et de tâches nécessitent JavaScript.
+- Déployé sur **Vercel** (compatible GitHub Pages/Netlify)
+- Version de production auditable publiquement
+- Fichier `favicon.ico` à la racine
+- Un seul point d'entrée : `index.html`
 
-## Développement
+---
 
-TAKTO est construit avec des technologies web standards :
+## 📝 Instructions d'utilisation
 
-- HTML pour la structure
-- CSS pour le style
-- JavaScript vanilla pour les fonctionnalités
+1. **Cloner le dépôt**
+2. **Ouvrir `index.html`** dans n'importe quel navigateur (même ancien)
+3. **Naviguer au clavier** ou à la souris
+4. **Créer des projets et tâches** via l'interface ou le terminal
 
-Aucun framework ou bibliothèque externe n'est utilisé pour garantir la légèreté et la simplicité de l'application.
+---
 
-## Licence
+## ⌨️ Raccourcis clavier principaux
 
-Ce projet est libre d'utilisation pour tous les développeurs qui cherchent une solution légère de gestion de tâches.
+- `Ctrl + 1` : Aller au terminal
+- `Ctrl + 2` : README
+- `Ctrl + 3` : FAQ
+- `Ctrl + 4` : Notre équipe
+- `Ctrl + 5` : Accessibilité
+- `Ctrl + H` : Commandes terminal
+- `Ctrl + Maj + L` : Liste projets
+- `Ctrl + Maj + T` : Liste tâches
+- `Ctrl + Maj + C` : Effacer le terminal
+- `Tab` / `Shift+Tab` : Navigation linéaire
+- `Entrée` / `Espace` : Activer un bouton ou un lien
+
+---
+
+## 🛠️ Choix techniques & étapes du projet
+
+- **Phase 1** : Spécification, choix de l'architecture, wireframes minimalistes
+- **Phase 2** : Développement HTML/CSS sémantique, structure accessible
+- **Phase 3** : Ajout du JS vanilla, terminal interactif, gestion locale des données
+- **Phase 4** : Accessibilité avancée (focus, ARIA, navigation clavier, skip to content)
+- **Phase 5** : Optimisation (minification JS, fusion CSS, favicon, audit Lighthouse)
+- **Phase 6** : Déploiement sur Vercel, tests sur navigateurs anciens et mobiles
+
+---
+
+## 👥 Crédits
+
+- **Développement** : Icham, Samy, Wissem, Victor, Maxime
+- **Entreprise** : 3W
+- **Partenaire pédagogique** : HETIC
+
+---
+
+## 📄 Licence
+
+Projet libre pour tout usage pédagogique ou personnel.
+
+---
+
+## 💡 Inspirations
+
+- [motherfuckingwebsite.com](https://motherfuckingwebsite.com/)
+- [WCAG 2.1](https://www.w3.org/WAI/WCAG21/quickref/)
+
+---
+
+**TAKTO : la gestion de tâches, sans superflu, pour tous, partout.**
