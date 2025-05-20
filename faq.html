@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="TAKTO - FAQ du projet de veille technologique."
+    />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="app/css/styles.css" />
+    <title>TAKTO - FAQ</title>
+  </head>
+  <body>
+    <noscript>
+      <div
+        style="
+          background: #23272f;
+          color: #fff;
+          padding: 1em;
+          text-align: center;
+          font-size: 1.1em;
+        "
+      >
+        JavaScript est désactivé ou non supporté. Toutes les fonctionnalités
+        essentielles sont disponibles, mais certaines améliorations (thème,
+        ajout de liens, menu burger) nécessitent JavaScript.
+      </div>
+    </noscript>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <div class="center-flex">
+      <header>
+        <div class="header-content">
+          <a href="index.html" class="logo-link" aria-label="Accueil TAKTO">
+            <img
+              src="assets/public/TAKTO BLACK.svg"
+              alt="Logo TAKTO"
+              width="90"
+              height="44"
+              class="logo"
+              id="takto-logo"
+            />
+          </a>
+          <nav class="header-nav" aria-label="Navigation principale">
+            <ul>
+              <li><a href="index.html">Dashboard</a></li>
+              <li><a href="readme.html">Readme</a></li>
+              <li><a href="faq.html" aria-current="page">FAQ</a></li>
+              <li><a href="team.html">Équipe</a></li>
+              <li><a href="accessibility.html">Accessibilité</a></li>
+            </ul>
+          </nav>
+          <div class="js-only">
+            <button
+              id="theme-toggle-btn"
+              aria-label="Basculer le thème"
+              title="Basculer le thème"
+              type="button"
+            >
+              <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <div class="app-container">
+        <aside class="sidebar" aria-label="Liens de veille technologique">
+          <nav class="no-js-only" aria-label="Navigation secondaire">
+            <ul>
+              <li><a href="index.html">Dashboard</a></li>
+              <li><a href="readme.html">Readme</a></li>
+              <li><a href="faq.html" aria-current="page">FAQ</a></li>
+              <li><a href="team.html">Équipe</a></li>
+              <li><a href="accessibility.html">Accessibilité</a></li>
+            </ul>
+            <section>
+              <h3>📚 Documentation & Références</h3>
+              <ul>
+                <li>
+                  <a
+                    href="https://developer.mozilla.org/"
+                    target="_blank"
+                    rel="noopener"
+                    >MDN Web Docs</a
+                  >
+                </li>
+                <li>
+                  <a href="https://web.dev/" target="_blank" rel="noopener"
+                    >Web.dev</a
+                  >
+                </li>
+                <li>
+                  <a href="https://caniuse.com/" target="_blank" rel="noopener"
+                    >Can I Use</a
+                  >
+                </li>
+                <li>
+                  <a href="https://devdocs.io/" target="_blank" rel="noopener"
+                    >DevDocs</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://css-tricks.com/"
+                    target="_blank"
+                    rel="noopener"
+                    >CSS Tricks</a
+                  >
+                </li>
+              </ul>
+            </section>
+            <section>
+              <h3>📰 Blogs & Veille</h3>
+              <ul>
+                <li>
+                  <a
+                    href="https://www.smashingmagazine.com/"
+                    target="_blank"
+                    rel="noopener"
+                    >Smashing Magazine</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://alistapart.com/"
+                    target="_blank"
+                    rel="noopener"
+                    >A List Apart</a
+                  >
+                </li>
+                <li>
+                  <a href="https://daily.dev/" target="_blank" rel="noopener"
+                    >Daily Dev (widget)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://frontend.horse/"
+                    target="_blank"
+                    rel="noopener"
+                    >Frontend Horse</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://overreacted.io/"
+                    target="_blank"
+                    rel="noopener"
+                    >Overreacted (Dan Abramov)</a
+                  >
+                </li>
+              </ul>
+            </section>
+            <section>
+              <h3>🛠️ Outils Dev & Productivité</h3>
+              <ul>
+                <li>
+                  <a href="https://codepen.io/" target="_blank" rel="noopener"
+                    >CodePen</a
+                  >
+                </li>
+                <li>
+                  <a href="https://jsfiddle.net/" target="_blank" rel="noopener"
+                    >JSFiddle</a
+                  >
+                </li>
+                <li>
+                  <a href="https://regex101.com/" target="_blank" rel="noopener"
+                    >Regex101</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://carbon.now.sh/"
+                    target="_blank"
+                    rel="noopener"
+                    >Carbon</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://responsively.app/"
+                    target="_blank"
+                    rel="noopener"
+                    >Responsively App</a
+                  >
+                </li>
+                <li>
+                  <a href="https://squoosh.app/" target="_blank" rel="noopener"
+                    >Squoosh (compression image)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.figma.com/"
+                    target="_blank"
+                    rel="noopener"
+                    >Figma</a
+                  >
+                </li>
+              </ul>
+            </section>
+          </nav>
+          <div class="js-only">
+            <div id="static-links-container">
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-docs"
+                >
+                  <span>📚 Documentation & Références</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-docs">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://developer.mozilla.org/"
+                        target="_blank"
+                        rel="noopener"
+                        >MDN Web Docs</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://web.dev/" target="_blank" rel="noopener"
+                        >Web.dev</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://caniuse.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Can I Use</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://devdocs.io/"
+                        target="_blank"
+                        rel="noopener"
+                        >DevDocs</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://css-tricks.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >CSS Tricks</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-blogs"
+                >
+                  <span>📰 Blogs & Veille</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-blogs">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.smashingmagazine.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Smashing Magazine</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://alistapart.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >A List Apart</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://daily.dev/"
+                        target="_blank"
+                        rel="noopener"
+                        >Daily Dev (widget)</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://frontend.horse/"
+                        target="_blank"
+                        rel="noopener"
+                        >Frontend Horse</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://overreacted.io/"
+                        target="_blank"
+                        rel="noopener"
+                        >Overreacted (Dan Abramov)</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-tools"
+                >
+                  <span>🛠️ Outils Dev & Productivité</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-tools">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://codepen.io/"
+                        target="_blank"
+                        rel="noopener"
+                        >CodePen</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://jsfiddle.net/"
+                        target="_blank"
+                        rel="noopener"
+                        >JSFiddle</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://regex101.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Regex101</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://carbon.now.sh/"
+                        target="_blank"
+                        rel="noopener"
+                        >Carbon</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://responsively.app/"
+                        target="_blank"
+                        rel="noopener"
+                        >Responsively App</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://squoosh.app/"
+                        target="_blank"
+                        rel="noopener"
+                        >Squoosh (compression image)</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.figma.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Figma</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-podcasts"
+                >
+                  <span>🎙️ Podcasts & Vidéos</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-podcasts">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://syntax.fm/"
+                        target="_blank"
+                        rel="noopener"
+                        >Syntax.fm</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.codenewbie.org/podcast"
+                        target="_blank"
+                        rel="noopener"
+                        >CodeNewbie</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://frontendfirst.fm/"
+                        target="_blank"
+                        rel="noopener"
+                        >Frontend First</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/c/TraversyMedia"
+                        target="_blank"
+                        rel="noopener"
+                        >Traversy Media (YouTube)</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/c/Fireship"
+                        target="_blank"
+                        rel="noopener"
+                        >Fireship (YouTube)</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-newsletters"
+                >
+                  <span>💌 Newsletters</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-newsletters">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://frontendfoc.us/"
+                        target="_blank"
+                        rel="noopener"
+                        >Frontend Focus</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://javascriptweekly.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >JavaScript Weekly</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://css-weekly.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >CSS Weekly</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.smashingmagazine.com/the-smashing-newsletter/"
+                        target="_blank"
+                        rel="noopener"
+                        >Smashing Newsletter</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tldr.tech/"
+                        target="_blank"
+                        rel="noopener"
+                        >TLDR Newsletter</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-access"
+                >
+                  <span>🧪 Accessibilité & Performance</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-access">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://wave.webaim.org/"
+                        target="_blank"
+                        rel="noopener"
+                        >WAVE (accessibility test)</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://developers.google.com/web/tools/lighthouse"
+                        target="_blank"
+                        rel="noopener"
+                        >Lighthouse</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://a11y-style-guide.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >A11y Style Guide</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.w3.org/WAI/WCAG21/quickref/"
+                        target="_blank"
+                        rel="noopener"
+                        >WCAG Quickref</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-defis"
+                >
+                  <span>🧠 Défis & Pratique</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-defis">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.frontendmentor.io/"
+                        target="_blank"
+                        rel="noopener"
+                        >Frontend Mentor</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.codewars.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Codewars</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://leetcode.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >LeetCode</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://adventofcode.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Advent of Code</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://cssbattle.dev/"
+                        target="_blank"
+                        rel="noopener"
+                        >CSSBattle</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-inspi"
+                >
+                  <span>🎨 Inspiration & Design</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-inspi">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://dribbble.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Dribbble</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.lapa.ninja/"
+                        target="_blank"
+                        rel="noopener"
+                        >Lapa Ninja</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://mobbin.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Mobbin</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://land-book.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Land-book</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.awwwards.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Awwwards</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <section class="collapsible-category">
+                <button
+                  class="collapsible-header"
+                  aria-expanded="true"
+                  aria-controls="cat-freelance"
+                >
+                  <span>📂 Freelance / Organisation</span>
+                  <span class="arrow" aria-hidden="true">▼</span>
+                </button>
+                <div class="collapsible-content" id="cat-freelance">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://notionway.com/templates/freelance-notion-template/"
+                        target="_blank"
+                        rel="noopener"
+                        >Notion Templates Freelance</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.hellobonsai.com/"
+                        target="_blank"
+                        rel="noopener"
+                        >Hello Bonsai (facturation)</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.indy.fr/"
+                        target="_blank"
+                        rel="noopener"
+                        >Indy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://toggl.com/track/"
+                        target="_blank"
+                        rel="noopener"
+                        >Toggl Track</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://freelance-checklist.io/"
+                        target="_blank"
+                        rel="noopener"
+                        >Checklist Freelance</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="no-js-only">
+            <h1 class="app-title">TAKTO</h1>
+          </div>
+        </aside>
+        <main id="main-content" class="main-content-area" tabindex="-1">
+          <section class="content-section">
+            <h2>FAQ <span aria-hidden="true">❓</span></h2>
+            <p>
+              Bienvenue dans la FAQ de TAKTO ! Retrouvez ici les réponses aux
+              questions fréquentes sur le projet, son accessibilité et son
+              utilisation. <span aria-hidden="true">💡</span>
+            </p>
+            <div class="faq-list">
+              <div class="faq-card">
+                <h4>🧐 Qu'est-ce que TAKTO ?</h4>
+                <p>
+                  TAKTO est un tableau de veille technologique minimaliste,
+                  statique et accessible, conçu pour centraliser et partager des
+                  ressources utiles aux développeurs.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>♿ Pourquoi l'accessibilité est-elle une priorité ?</h4>
+                <p>
+                  Nous avons conçu TAKTO pour être utilisable par tous, y
+                  compris les personnes en situation de handicap. Navigation
+                  clavier, contraste élevé, structure sémantique et
+                  compatibilité avec les lecteurs d'écran sont au cœur du
+                  projet.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🌗 Comment changer le thème clair/sombre ?</h4>
+                <p>
+                  Utilisez le bouton en bas à droite de l'écran pour basculer
+                  entre le mode clair et sombre. Votre choix est mémorisé pour
+                  les prochaines visites !
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🔗 Puis-je ajouter mes propres liens ?</h4>
+                <p>
+                  Oui ! Si JavaScript est activé, un formulaire vous permet
+                  d'ajouter, rechercher et supprimer vos liens personnels,
+                  stockés localement dans votre navigateur.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🛡️ Mes données sont-elles privées ?</h4>
+                <p>
+                  Absolument. Toutes vos données restent sur votre appareil,
+                  dans le stockage local du navigateur. Aucun envoi vers un
+                  serveur.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>📱 TAKTO est-il responsive ?</h4>
+                <p>
+                  Oui, l'interface s'adapte à tous les écrans, du mobile au
+                  grand écran, pour une expérience optimale partout.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🧑‍💻 Qui est derrière TAKTO ?</h4>
+                <p>
+                  Une équipe d'étudiants passionnés, réunis pour un projet
+                  scolaire, chacun apportant sa touche personnelle !
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+      <footer>
+        <div class="footer-info">
+          <span>&copy; 2025 TAKTO</span>
+          <span class="footer-credits"
+            >Projet open source <span aria-hidden="true">🌱</span> pour la
+            veille technologique.</span
+          >
+        </div>
+        <div class="footer-credits">
+          Fait avec <span aria-hidden="true">❤️</span> par l'équipe TAKTO
+        </div>
+      </footer>
+    </div>
+    <script src="app/js/app.js" defer></script>
+  </body>
+</html>

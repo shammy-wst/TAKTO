@@ -1,606 +1,279 @@
-/**
- * TAKTO - Simple Task Manager
- * A lightweight task manager app for web developers
- */
+// TAKTO - Progressive Enhancement JS
+(function () {
+  // Utility: Add .js class, remove .no-js
+  document.documentElement.classList.remove("no-js");
+  document.documentElement.classList.add("js");
 
-// Define types for better TypeScript support
-/**
- * @typedef {Object} Project
- * @property {string} id
- * @property {string} name
- * @property {string} description
- * @property {Task[]} tasks
- */
-
-/**
- * @typedef {Object} Task
- * @property {string} id
- * @property {string} name
- * @property {string} description
- * @property {string} status
- */
-
-// DOM Elements
-const projectsList = document.getElementById("projects-list");
-const tasksList = document.getElementById("tasks-list");
-const projectsSection = document.getElementById("projects");
-const tasksSection = document.getElementById("tasks");
-const currentProjectName = document.getElementById("current-project-name");
-const statusFilter = document.getElementById("status-filter");
-
-// Buttons
-const newProjectBtn = document.getElementById("new-project-btn");
-const newTaskBtn = document.getElementById("new-task-btn");
-const backToProjectsBtn = document.getElementById("back-to-projects-btn");
-const cancelProjectBtn = document.getElementById("cancel-project-btn");
-const cancelTaskBtn = document.getElementById("cancel-task-btn");
-
-// Forms
-const projectForm = document.getElementById("project-form");
-const taskForm = document.getElementById("task-form");
-
-// Modals
-const projectModal = document.getElementById("project-modal");
-const taskModal = document.getElementById("task-modal");
-
-// Data
-/** @type {Project[]} */
-let projects = [];
-let currentProjectId = null;
-
-// Load data from localStorage
-function loadData() {
-  const storedProjects = localStorage.getItem("takto_projects");
-  if (storedProjects) {
-    projects = JSON.parse(storedProjects);
-  }
-}
-
-// Save data to localStorage
-function saveData() {
-  localStorage.setItem("takto_projects", JSON.stringify(projects));
-}
-
-// Generate unique ID
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-}
-
-// Render projects
-function renderProjects() {
-  if (!projectsList) return;
-
-  projectsList.innerHTML = "";
-
-  if (projects.length === 0) {
-    projectsList.innerHTML =
-      '<div class="empty-state">Aucun projet pour le moment. Créez votre premier projet !</div>';
-    return;
-  }
-
-  projects.forEach((project) => {
-    const projectCard = document.createElement("div");
-    projectCard.className = "project-card keyboard-focus";
-    projectCard.tabIndex = 0;
-    projectCard.setAttribute("data-id", project.id);
-
-    // Count tasks by status
-    const todoCount = project.tasks.filter(
-      (task) => task.status === "todo"
-    ).length;
-    const inProgressCount = project.tasks.filter(
-      (task) => task.status === "in-progress"
-    ).length;
-    const doneCount = project.tasks.filter(
-      (task) => task.status === "done"
-    ).length;
-
-    projectCard.innerHTML = `
-            <h3>${project.name}</h3>
-            <div class="description">${
-              project.description || "Aucune description"
-            }</div>
-            <div class="project-stats">
-                <span class="status status-todo">${todoCount} à faire</span>
-                <span class="status status-in-progress">${inProgressCount} en cours</span>
-                <span class="status status-done">${doneCount} terminées</span>
-            </div>
-            <div class="card-actions">
-                <button class="action-btn view-btn">Voir</button>
-                <button class="action-btn edit-btn">Éditer</button>
-                <button class="action-btn delete-btn">Supprimer</button>
-            </div>
-        `;
-
-    projectsList.appendChild(projectCard);
-
-    // Add event listeners
-    const viewBtn = projectCard.querySelector(".view-btn");
-    const editBtn = projectCard.querySelector(".edit-btn");
-    const deleteBtn = projectCard.querySelector(".delete-btn");
-
-    if (viewBtn) {
-      viewBtn.addEventListener("click", () => viewProject(project.id));
+  // Theme toggle
+  const themeBtn = document.getElementById("theme-toggle-btn");
+  const body = document.body;
+  const logoImg = document.getElementById("takto-logo");
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      body.classList.add("dark-theme");
+      if (logoImg && logoImg instanceof HTMLImageElement)
+        logoImg.src = "assets/public/TAKTO WHITE.svg";
+    } else {
+      body.classList.remove("dark-theme");
+      if (logoImg && logoImg instanceof HTMLImageElement)
+        logoImg.src = "assets/public/TAKTO BLACK.svg";
     }
+  }
+  function getSavedTheme() {
+    return localStorage.getItem("takto-theme") || "light";
+  }
+  function saveTheme(theme) {
+    localStorage.setItem("takto-theme", theme);
+  }
+  function toggleTheme() {
+    const newTheme = body.classList.contains("dark-theme") ? "light" : "dark";
+    applyTheme(newTheme);
+    saveTheme(newTheme);
+    updateThemeBtn();
+  }
+  function updateThemeBtn() {
+    if (!themeBtn) return;
+    const isDark = body.classList.contains("dark-theme");
+    const icon = document.getElementById("theme-toggle-icon");
+    if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+    themeBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+  }
+  if (themeBtn) {
+    themeBtn.addEventListener("click", toggleTheme);
+    applyTheme(getSavedTheme());
+    updateThemeBtn();
+  } else {
+    // Fallback: apply theme on load
+    applyTheme(getSavedTheme());
+  }
 
-    if (editBtn) {
-      editBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openProjectModal(project);
+  // Logo click always goes to dashboard
+  const logoLink = document.querySelector(".logo-link");
+  if (logoLink) {
+    logoLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.location.href = "index.html";
+    });
+  }
+
+  // User Links Management
+  let userLinks = [];
+  function loadLinks() {
+    try {
+      const data = JSON.parse(localStorage.getItem("takto-user-links") || "[]");
+      if (Array.isArray(data)) {
+        userLinks = data.filter(
+          (l) => l && l.id && l.name && l.url && l.category
+        );
+      }
+    } catch (e) {
+      userLinks = [];
+    }
+  }
+  function saveLinks() {
+    localStorage.setItem("takto-user-links", JSON.stringify(userLinks));
+  }
+  function addLink(name, url, category) {
+    const id =
+      "link-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+    userLinks.push({ id, name, url, category });
+    saveLinks();
+    renderLinks();
+  }
+  function deleteLink(linkId) {
+    userLinks = userLinks.filter((l) => l.id !== linkId);
+    saveLinks();
+    renderLinks();
+  }
+
+  // Render user links
+  function renderLinks(filter = "") {
+    const list = document.getElementById("js-links-list");
+    if (!list) return;
+    let filtered = userLinks;
+    if (filter) {
+      const f = filter.toLowerCase();
+      filtered = userLinks.filter(
+        (l) =>
+          l.name.toLowerCase().includes(f) ||
+          l.url.toLowerCase().includes(f) ||
+          l.category.toLowerCase().includes(f)
+      );
+    }
+    // Group by category
+    const grouped = {};
+    filtered.forEach((l) => {
+      if (!grouped[l.category]) grouped[l.category] = [];
+      grouped[l.category].push(l);
+    });
+    let html = "";
+    Object.keys(grouped).forEach((cat) => {
+      html += `<div class='user-links-group'><h4>${cat}</h4><ul>`;
+      grouped[cat].forEach((link) => {
+        html += `<li><a href='${link.url}' target='_blank' rel='noopener'>${link.name}</a> <button type='button' class='delete-link-btn' data-id='${link.id}' aria-label='Supprimer ce lien' title='Supprimer'>🗑️</button></li>`;
       });
+      html += "</ul></div>";
+    });
+    if (!html) {
+      html = "<p>Aucun lien trouvé ou ajouté pour le moment.</p>";
     }
+    list.innerHTML = html;
+  }
 
-    if (deleteBtn) {
-      deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
+  // Render JS features UI
+  function renderApp() {
+    const features = document.getElementById("js-features");
+    if (!features) return;
+    features.innerHTML = `
+      <form id='add-link-form' class='app-section' autocomplete='off'>
+        <h3>Ajouter un lien personnel</h3>
+        <div class='add-link-row'>
+          <label>Nom du lien
+            <input type='text' name='name' required maxlength='60' aria-label='Nom du lien'>
+          </label>
+          <label>URL
+            <input type='url' name='url' required pattern='https?://.+' aria-label='URL du lien'>
+          </label>
+          <label>Catégorie
+            <input type='text' name='category' required maxlength='40' aria-label='Catégorie du lien'>
+          </label>
+        </div>
+        <button type='submit'>Ajouter</button>
+      </form>
+      <div class='app-section'>
+        <label for='link-search'>Rechercher dans vos liens</label>
+        <input type='search' id='link-search' placeholder='Recherche...' autocomplete='off' />
+      </div>
+      <div id='js-links-list' class='app-section' aria-live='polite'></div>
+    `;
+    // Add event listeners
+    var addForm = document.getElementById("add-link-form");
+    if (addForm) {
+      addForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var form = e.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        var nameInput = form.elements["name"];
+        var urlInput = form.elements["url"];
+        var categoryInput = form.elements["category"];
         if (
-          confirm(
-            `Êtes-vous sûr de vouloir supprimer le projet "${project.name}" ?`
-          )
+          nameInput instanceof HTMLInputElement &&
+          urlInput instanceof HTMLInputElement &&
+          categoryInput instanceof HTMLInputElement
         ) {
-          deleteProject(project.id);
+          var name = nameInput.value.trim();
+          var url = urlInput.value.trim();
+          var category = categoryInput.value.trim();
+          if (name && url && category) {
+            addLink(name, url, category);
+            form.reset();
+          }
         }
       });
     }
+    var searchInput = document.getElementById("link-search");
+    if (searchInput && searchInput instanceof HTMLInputElement) {
+      searchInput.addEventListener("input", function () {
+        renderLinks(
+          searchInput instanceof HTMLInputElement ? searchInput.value : ""
+        );
+      });
+    }
+    var linksList = document.getElementById("js-links-list");
+    if (linksList) {
+      linksList.addEventListener("click", function (e) {
+        var target = e.target;
+        if (
+          target &&
+          target instanceof HTMLElement &&
+          target.classList.contains("delete-link-btn")
+        ) {
+          deleteLink(target.getAttribute("data-id"));
+        }
+      });
+    }
+  }
 
-    // Open project on click or Enter key
-    projectCard.addEventListener("click", () => viewProject(project.id));
-    projectCard.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        viewProject(project.id);
+  // Collapsible sidebar categories
+  function initCollapsibles() {
+    var cats = document.querySelectorAll(".collapsible-category");
+    cats.forEach(function (cat) {
+      var btn = cat.querySelector(".collapsible-header");
+      if (!btn) return;
+      // Always start collapsed
+      btn.setAttribute("aria-expanded", "false");
+      cat.classList.add("collapsed");
+      var arrow = btn.querySelector(".arrow");
+      if (arrow) arrow.textContent = "▶";
+      btn.addEventListener("click", function () {
+        if (!btn) return;
+        var expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", (!expanded).toString());
+        cat.classList.toggle("collapsed");
+        var arrow = btn.querySelector(".arrow");
+        if (arrow) arrow.textContent = expanded ? "▶" : "▼";
+      });
+    });
+  }
+
+  function collapseCategoriesOnLoad() {
+    // Always collapse categories on every page load
+    initCollapsibles();
+  }
+
+  // Hamburger menu for mobile
+  function initHamburger() {
+    var hamburger = document.createElement("button");
+    hamburger.className = "hamburger js-only";
+    hamburger.setAttribute("aria-label", "Ouvrir/fermer le menu");
+    hamburger.setAttribute("aria-controls", "header-nav");
+    hamburger.setAttribute("aria-expanded", "false");
+    hamburger.innerHTML = "<span></span><span></span><span></span>";
+    var header = document.querySelector(".header-content");
+    if (header) header.insertBefore(hamburger, header.firstChild);
+    var headerNav = document.querySelector(".header-nav");
+    if (headerNav) headerNav.setAttribute("id", "header-nav");
+    hamburger.addEventListener("click", function () {
+      if (!headerNav) return;
+      var isOpen = headerNav.classList.toggle("open");
+      hamburger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+    // Close nav on ESC
+    document.addEventListener("keydown", function (e) {
+      if (!headerNav || !hamburger) return;
+      if (e.key === "Escape" && headerNav.classList.contains("open")) {
+        headerNav.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
       }
     });
-  });
-}
-
-// Render tasks for the current project
-function renderTasks(filteredStatus = "all") {
-  if (!tasksList) return;
-
-  tasksList.innerHTML = "";
-
-  const currentProject = projects.find(
-    (project) => project.id === currentProjectId
-  );
-  if (!currentProject) return;
-
-  let filteredTasks = currentProject.tasks;
-
-  // Apply filter
-  if (filteredStatus !== "all") {
-    filteredTasks = filteredTasks.filter(
-      (task) => task.status === filteredStatus
-    );
-  }
-
-  if (filteredTasks.length === 0) {
-    tasksList.innerHTML =
-      '<div class="empty-state">Aucune tâche dans cette catégorie. Ajoutez-en une nouvelle !</div>';
-    return;
-  }
-
-  filteredTasks.forEach((task) => {
-    const taskCard = document.createElement("div");
-    taskCard.className = "task-card keyboard-focus";
-    taskCard.tabIndex = 0;
-    taskCard.setAttribute("data-id", task.id);
-
-    taskCard.innerHTML = `
-            <h3>${task.name}</h3>
-            <div class="description">${
-              task.description || "Aucune description"
-            }</div>
-            <span class="status status-${task.status}">${getStatusLabel(
-      task.status
-    )}</span>
-            <div class="card-actions">
-                <button class="action-btn edit-btn">Éditer</button>
-                <button class="action-btn delete-btn">Supprimer</button>
-            </div>
-        `;
-
-    tasksList.appendChild(taskCard);
-
-    // Add event listeners
-    const editBtn = taskCard.querySelector(".edit-btn");
-    const deleteBtn = taskCard.querySelector(".delete-btn");
-
-    if (editBtn) {
-      editBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openTaskModal(task);
-      });
-    }
-
-    if (deleteBtn) {
-      deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (
-          confirm(
-            `Êtes-vous sûr de vouloir supprimer la tâche "${task.name}" ?`
-          )
-        ) {
-          deleteTask(task.id);
-        }
-      });
-    }
-
-    // Open task edit modal on click or Enter key
-    taskCard.addEventListener("click", () => openTaskModal(task));
-    taskCard.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        openTaskModal(task);
+    // Close nav when clicking outside
+    document.addEventListener("click", function (e) {
+      if (!headerNav || !hamburger) return;
+      var target = e.target;
+      if (
+        headerNav.classList.contains("open") &&
+        !headerNav.contains(target instanceof Node ? target : null) &&
+        !hamburger.contains(target instanceof Node ? target : null)
+      ) {
+        headerNav.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
       }
     });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("js-features")) {
+      renderApp();
+      loadLinks();
+      renderLinks();
+      if (themeBtn) updateThemeBtn();
+    }
+    // Always apply saved theme
+    applyTheme(getSavedTheme());
+    // Always collapse categories
+    collapseCategoriesOnLoad();
+    if (window.innerWidth <= 600) {
+      initHamburger();
+    }
   });
-}
-
-// View project
-function viewProject(projectId) {
-  currentProjectId = projectId;
-  const project = projects.find((p) => p.id === projectId);
-
-  if (
-    project &&
-    projectsSection &&
-    tasksSection &&
-    currentProjectName &&
-    statusFilter
-  ) {
-    currentProjectName.textContent = project.name;
-    projectsSection.classList.add("hidden");
-    tasksSection.classList.remove("hidden");
-
-    // Corrigé: Ajouter type assertion pour statusFilter
-    if (statusFilter instanceof HTMLSelectElement) {
-      statusFilter.value = "all";
-    }
-
-    renderTasks();
-  }
-}
-
-// Add new project
-function addProject(projectData) {
-  const newProject = {
-    id: generateId(),
-    name: projectData.name,
-    description: projectData.description,
-    tasks: [],
-  };
-
-  projects.push(newProject);
-  saveData();
-  renderProjects();
-}
-
-// Update project
-function updateProject(projectId, projectData) {
-  const project = projects.find((p) => p.id === projectId);
-
-  if (project) {
-    project.name = projectData.name;
-    project.description = projectData.description;
-
-    saveData();
-    renderProjects();
-
-    // Update current project name if viewing this project
-    if (currentProjectId === projectId && currentProjectName) {
-      currentProjectName.textContent = project.name;
-    }
-  }
-}
-
-// Delete project
-function deleteProject(projectId) {
-  projects = projects.filter((project) => project.id !== projectId);
-  saveData();
-  renderProjects();
-
-  // If deleted the current project, go back to projects view
-  if (currentProjectId === projectId) {
-    backToProjects();
-  }
-}
-
-// Add new task
-function addTask(taskData) {
-  const currentProject = projects.find(
-    (project) => project.id === currentProjectId
-  );
-
-  if (currentProject) {
-    const newTask = {
-      id: generateId(),
-      name: taskData.name,
-      description: taskData.description,
-      status: taskData.status,
-    };
-
-    currentProject.tasks.push(newTask);
-    saveData();
-
-    // Corrigé: Vérifier le type pour statusFilter
-    let filterValue = "all";
-    if (statusFilter instanceof HTMLSelectElement) {
-      filterValue = statusFilter.value;
-    }
-    renderTasks(filterValue);
-  }
-}
-
-// Update task
-function updateTask(taskId, taskData) {
-  const currentProject = projects.find(
-    (project) => project.id === currentProjectId
-  );
-
-  if (currentProject) {
-    const task = currentProject.tasks.find((t) => t.id === taskId);
-
-    if (task) {
-      task.name = taskData.name;
-      task.description = taskData.description;
-      task.status = taskData.status;
-
-      saveData();
-
-      // Corrigé: Vérifier le type pour statusFilter
-      let filterValue = "all";
-      if (statusFilter instanceof HTMLSelectElement) {
-        filterValue = statusFilter.value;
-      }
-      renderTasks(filterValue);
-    }
-  }
-}
-
-// Delete task
-function deleteTask(taskId) {
-  const currentProject = projects.find(
-    (project) => project.id === currentProjectId
-  );
-
-  if (currentProject) {
-    currentProject.tasks = currentProject.tasks.filter(
-      (task) => task.id !== taskId
-    );
-    saveData();
-
-    // Corrigé: Vérifier le type pour statusFilter
-    let filterValue = "all";
-    if (statusFilter instanceof HTMLSelectElement) {
-      filterValue = statusFilter.value;
-    }
-    renderTasks(filterValue);
-  }
-}
-
-// Helper function to get status label
-function getStatusLabel(status) {
-  switch (status) {
-    case "todo":
-      return "À faire";
-    case "in-progress":
-      return "En cours";
-    case "done":
-      return "Terminé";
-    default:
-      return status;
-  }
-}
-
-/**
- * Open project modal
- * @param {Project|null} project - The project to edit, or null for a new project
- */
-function openProjectModal(project = null) {
-  if (!projectForm || !projectModal) return;
-
-  const projectNameInput = document.getElementById("project-name");
-  const projectDescInput = document.getElementById("project-description");
-
-  if (!projectNameInput || !projectDescInput) return;
-
-  // Clear previous values
-  if (projectForm instanceof HTMLFormElement) {
-    projectForm.reset();
-
-    // If editing an existing project
-    if (project) {
-      // Corrigé: project est maintenant typé
-      projectForm.setAttribute("data-id", project.id);
-      if (projectNameInput instanceof HTMLInputElement) {
-        projectNameInput.value = project.name;
-      }
-      if (projectDescInput instanceof HTMLTextAreaElement) {
-        projectDescInput.value = project.description || "";
-      }
-    } else {
-      projectForm.removeAttribute("data-id");
-    }
-  }
-
-  projectModal.classList.remove("hidden");
-  if (projectNameInput instanceof HTMLInputElement) {
-    projectNameInput.focus();
-  }
-}
-
-/**
- * Open task modal
- * @param {Task|null} task - The task to edit, or null for a new task
- */
-function openTaskModal(task = null) {
-  if (!taskForm || !taskModal) return;
-
-  const taskNameInput = document.getElementById("task-name");
-  const taskDescInput = document.getElementById("task-description");
-  const taskStatusInput = document.getElementById("task-status");
-
-  if (!taskNameInput || !taskDescInput || !taskStatusInput) return;
-
-  // Clear previous values
-  if (taskForm instanceof HTMLFormElement) {
-    taskForm.reset();
-
-    // If editing an existing task
-    if (task) {
-      // Corrigé: task est maintenant typé
-      taskForm.setAttribute("data-id", task.id);
-      if (taskNameInput instanceof HTMLInputElement) {
-        taskNameInput.value = task.name;
-      }
-      if (taskDescInput instanceof HTMLTextAreaElement) {
-        taskDescInput.value = task.description || "";
-      }
-      if (taskStatusInput instanceof HTMLSelectElement) {
-        taskStatusInput.value = task.status;
-      }
-    } else {
-      taskForm.removeAttribute("data-id");
-      if (taskStatusInput instanceof HTMLSelectElement) {
-        taskStatusInput.value = "todo"; // Default value for new tasks
-      }
-    }
-  }
-
-  taskModal.classList.remove("hidden");
-  if (taskNameInput instanceof HTMLInputElement) {
-    taskNameInput.focus();
-  }
-}
-
-// Back to projects
-function backToProjects() {
-  if (!projectsSection || !tasksSection) return;
-
-  projectsSection.classList.remove("hidden");
-  tasksSection.classList.add("hidden");
-  currentProjectId = null;
-}
-
-// Event listeners
-document.addEventListener("DOMContentLoaded", () => {
-  // Load initial data
-  loadData();
-
-  // Initialize the terminal with access to the task management functions
-  // @ts-ignore
-  if (window.TaktoTerminal) {
-    // @ts-ignore
-    const terminal = new TaktoTerminal();
-
-    // Create a data manager API that the terminal can use
-    const dataManager = {
-      getAllProjects: () => projects,
-      getProjectById: (id) => projects.find((p) => String(p.id) === String(id)),
-      getAllTasks: () => {
-        const allTasks = [];
-        projects.forEach((project) => {
-          project.tasks.forEach((task) => {
-            allTasks.push({
-              ...task,
-              projectId: project.id,
-            });
-          });
-        });
-        return allTasks;
-      },
-      getTaskById: (id) => {
-        for (const project of projects) {
-          const task = project.tasks.find((t) => String(t.id) === String(id));
-          if (task) {
-            return { ...task, projectId: project.id };
-          }
-        }
-        return null;
-      },
-      getTasksByProjectId: (projectId) => {
-        const project = projects.find(
-          (p) => String(p.id) === String(projectId)
-        );
-        return project
-          ? project.tasks.map((task) => ({ ...task, projectId: project.id }))
-          : [];
-      },
-      createProject: (name) => {
-        const project = {
-          id: generateId(),
-          name,
-          description: "",
-          tasks: [],
-        };
-        projects.push(project);
-        saveData();
-        return project;
-      },
-      createTask: (projectId, name) => {
-        const project = projects.find(
-          (p) => String(p.id) === String(projectId)
-        );
-        if (!project) return null;
-
-        const task = {
-          id: generateId(),
-          name,
-          description: "",
-          status: "todo",
-        };
-
-        project.tasks.push(task);
-        saveData();
-        return { ...task, projectId };
-      },
-      updateProject: (id, data) => {
-        const project = projects.find((p) => String(p.id) === String(id));
-        if (!project) return false;
-
-        Object.assign(project, data);
-        saveData();
-        return true;
-      },
-      updateTask: (id, data) => {
-        for (const project of projects) {
-          const taskIndex = project.tasks.findIndex(
-            (t) => String(t.id) === String(id)
-          );
-          if (taskIndex !== -1) {
-            Object.assign(project.tasks[taskIndex], data);
-            saveData();
-            return true;
-          }
-        }
-        return false;
-      },
-      deleteProject: (id) => {
-        const initialLength = projects.length;
-        projects = projects.filter((p) => String(p.id) !== String(id));
-
-        if (projects.length !== initialLength) {
-          saveData();
-          return true;
-        }
-        return false;
-      },
-      deleteTask: (id) => {
-        for (const project of projects) {
-          const initialLength = project.tasks.length;
-          project.tasks = project.tasks.filter(
-            (t) => String(t.id) !== String(id)
-          );
-
-          if (project.tasks.length !== initialLength) {
-            saveData();
-            return true;
-          }
-        }
-        return false;
-      },
-    };
-
-    // Initialize the terminal with the data manager
-    terminal.init(dataManager);
-  }
-});
+})();
