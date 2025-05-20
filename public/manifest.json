@@ -8,14 +8,24 @@
   "theme_color": "#23272f",
   "icons": [
     {
-      "src": "TAKTO BLACK.svg",
-      "sizes": "90x44",
-      "type": "image/svg+xml"
+      "src": "icons/icon-black-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "favicon.ico",
-      "sizes": "48x48 32x32 16x16",
-      "type": "image/x-icon"
+      "src": "icons/icon-black-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-white-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-white-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

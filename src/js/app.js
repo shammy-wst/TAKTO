@@ -8,6 +8,11 @@
   const themeBtn = document.getElementById("theme-toggle-btn");
   const body = document.body;
   const logoImg = document.getElementById("takto-logo");
+  function updateFavicon(theme) {
+    const link = document.querySelector("link[rel~='icon']");
+    if (!link || !(link instanceof HTMLLinkElement)) return;
+    link.href = theme === "dark" ? "TAKTO WHITE.svg" : "TAKTO BLACK.svg";
+  }
   function applyTheme(theme) {
     if (theme === "dark") {
       body.classList.add("dark-theme");
@@ -58,6 +63,7 @@
       document.documentElement.style.setProperty("--skip-link-color", "#fff");
     }
     document.documentElement.style.colorScheme = theme;
+    updateFavicon(theme);
   }
   function getSystemTheme() {
     return window.matchMedia &&
