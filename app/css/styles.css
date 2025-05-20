@@ -21,6 +21,20 @@
   --header-height: 64px;
 }
 
+.no-js:root {
+  --bg-color: #f7f7f8;
+  --input-bg: #fff;
+  --text-color: #18191a;
+  --primary: #23272f;
+  --secondary: #f3f3f4;
+  --accent: #e5e7eb;
+  --border-color: #ececec;
+  --border-highlight: #e0e0e0;
+  --focus-outline: 2.5px solid #23272f;
+  --skip-link-bg: #23272f;
+  --skip-link-color: #fff;
+}
+
 html,
 body {
   height: 100%;
@@ -86,7 +100,7 @@ body {
 }
 
 .sidebar {
-  flex: 0 0 var(--sidebar-width);
+  flex: 0 0 auto;
   background: var(--input-bg);
   border-right: 1.5px solid var(--border-highlight);
   padding: 2rem 1rem 2rem 1.5rem;
@@ -98,6 +112,7 @@ body {
   box-sizing: border-box;
   width: var(--sidebar-width);
   font-size: 0.97rem;
+  position: relative;
 }
 
 .main-content-area {
@@ -855,5 +870,82 @@ body.dark-theme #add-link-form button[type="submit"]:focus {
     border-radius: 2.5px;
     transition: 0.3s;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  body,
+  .app-container,
+  .main-content-area,
+  .sidebar,
+  header,
+  footer {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .sidebar,
+  .js-only,
+  .no-js-only,
+  .header-nav,
+  #theme-toggle-btn,
+  .footer-info,
+  .footer-credits {
+    display: none !important;
+  }
+  .main-content-area,
+  .content-section,
+  .app-section {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #18191a;
+    --input-bg: #23272f;
+    --text-color: #f7f7f8;
+    --primary: #f7f7f8;
+    --secondary: #23272f;
+    --accent: #35363a;
+    --border-color: #5a5b60;
+    --border-highlight: #6a6b70;
+    --focus-outline: 2.5px solid #bdbdbd;
+    --skip-link-bg: #bdbdbd;
+    --skip-link-color: #23272f;
+  }
+}
+
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  background: transparent;
+  z-index: 20;
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+.sidebar-resize-handle:focus {
+  outline: 2.5px solid #23272f;
+  background: var(--accent);
+}
+@media (max-width: 600px) {
+  .sidebar-resize-handle {
+    display: none !important;
   }
 }

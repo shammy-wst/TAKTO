@@ -13,14 +13,63 @@
       body.classList.add("dark-theme");
       if (logoImg && logoImg instanceof HTMLImageElement)
         logoImg.src = "assets/public/TAKTO WHITE.svg";
+      // Variables CSS dark
+      document.documentElement.style.setProperty("--bg-color", "#18191a");
+      document.documentElement.style.setProperty("--input-bg", "#23272f");
+      document.documentElement.style.setProperty("--text-color", "#f7f7f8");
+      document.documentElement.style.setProperty("--primary", "#f7f7f8");
+      document.documentElement.style.setProperty("--secondary", "#23272f");
+      document.documentElement.style.setProperty("--accent", "#35363a");
+      document.documentElement.style.setProperty("--border-color", "#5a5b60");
+      document.documentElement.style.setProperty(
+        "--border-highlight",
+        "#6a6b70"
+      );
+      document.documentElement.style.setProperty(
+        "--focus-outline",
+        "2.5px solid #bdbdbd"
+      );
+      document.documentElement.style.setProperty("--skip-link-bg", "#bdbdbd");
+      document.documentElement.style.setProperty(
+        "--skip-link-color",
+        "#23272f"
+      );
     } else {
       body.classList.remove("dark-theme");
       if (logoImg && logoImg instanceof HTMLImageElement)
         logoImg.src = "assets/public/TAKTO BLACK.svg";
+      // Variables CSS light
+      document.documentElement.style.setProperty("--bg-color", "#f7f7f8");
+      document.documentElement.style.setProperty("--input-bg", "#fff");
+      document.documentElement.style.setProperty("--text-color", "#18191a");
+      document.documentElement.style.setProperty("--primary", "#23272f");
+      document.documentElement.style.setProperty("--secondary", "#f3f3f4");
+      document.documentElement.style.setProperty("--accent", "#e5e7eb");
+      document.documentElement.style.setProperty("--border-color", "#ececec");
+      document.documentElement.style.setProperty(
+        "--border-highlight",
+        "#e0e0e0"
+      );
+      document.documentElement.style.setProperty(
+        "--focus-outline",
+        "2.5px solid #23272f"
+      );
+      document.documentElement.style.setProperty("--skip-link-bg", "#23272f");
+      document.documentElement.style.setProperty("--skip-link-color", "#fff");
     }
+    document.documentElement.style.colorScheme = theme;
+  }
+  function getSystemTheme() {
+    return window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
   function getSavedTheme() {
-    return localStorage.getItem("takto-theme") || "light";
+    const saved = localStorage.getItem("takto-theme");
+    if (saved === "dark" || saved === "light") return saved;
+    // Si aucun choix utilisateur, détecter le thème système
+    return getSystemTheme();
   }
   function saveTheme(theme) {
     localStorage.setItem("takto-theme", theme);
@@ -37,6 +86,7 @@
     const icon = document.getElementById("theme-toggle-icon");
     if (icon) icon.textContent = isDark ? "☀️" : "🌙";
     themeBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+    themeBtn.setAttribute("aria-checked", isDark ? "true" : "false");
   }
   if (themeBtn) {
     themeBtn.addEventListener("click", toggleTheme);
@@ -120,6 +170,62 @@
     list.innerHTML = html;
   }
 
+  // Export/Import de liens
+  function exportLinks() {
+    const data = JSON.stringify(userLinks, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "takto-liens.json";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  }
+  function importLinksFromFile(file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const result =
+          e.target && typeof e.target.result === "string"
+            ? e.target.result
+            : "";
+        const imported = JSON.parse(result);
+        if (Array.isArray(imported)) {
+          let added = 0;
+          imported.forEach((l) => {
+            if (l && l.name && l.url && l.category) {
+              // Générer un nouvel id unique
+              const id =
+                "link-" +
+                Date.now() +
+                "-" +
+                Math.random().toString(36).slice(2, 8);
+              userLinks.push({
+                id,
+                name: l.name,
+                url: l.url,
+                category: l.category,
+              });
+              added++;
+            }
+          });
+          saveLinks();
+          renderLinks();
+          alert(added + " liens importés.");
+        } else {
+          alert("Fichier invalide.");
+        }
+      } catch (err) {
+        alert("Erreur lors de l'import.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
   // Render JS features UI
   function renderApp() {
     const features = document.getElementById("js-features");
@@ -140,9 +246,14 @@
         </div>
         <button type='submit'>Ajouter</button>
       </form>
-      <div class='app-section'>
+      <div class='app-section' style='display: flex; gap: 1rem; align-items: center;'>
         <label for='link-search'>Rechercher dans vos liens</label>
         <input type='search' id='link-search' placeholder='Recherche...' autocomplete='off' />
+        <button id='export-links-btn' type='button' title='Exporter vos liens' aria-label='Exporter vos liens'>Exporter</button>
+        <label for='import-links-input' style='margin: 0; padding: 0; display: inline;'>
+          <button id='import-links-btn' type='button' title='Importer des liens' aria-label='Importer des liens'>Importer</button>
+          <input type='file' id='import-links-input' accept='.json,application/json' style='display: none;' />
+        </label>
       </div>
       <div id='js-links-list' class='app-section' aria-live='polite'></div>
     `;
@@ -192,6 +303,29 @@
         }
       });
     }
+    var exportBtn = document.getElementById("export-links-btn");
+    if (exportBtn) {
+      exportBtn.addEventListener("click", exportLinks);
+    }
+    var importBtn = document.getElementById("import-links-btn");
+    var importInput = document.getElementById("import-links-input");
+    if (importBtn && importInput && importInput instanceof HTMLInputElement) {
+      importBtn.addEventListener("click", function () {
+        importInput.click();
+      });
+      importInput.addEventListener("change", function (e) {
+        const input = e.target;
+        if (
+          input &&
+          input instanceof HTMLInputElement &&
+          input.files &&
+          input.files[0]
+        ) {
+          importLinksFromFile(input.files[0]);
+          input.value = "";
+        }
+      });
+    }
   }
 
   // Collapsible sidebar categories
@@ -212,6 +346,7 @@
         cat.classList.toggle("collapsed");
         var arrow = btn.querySelector(".arrow");
         if (arrow) arrow.textContent = expanded ? "▶" : "▼";
+        if (btn instanceof HTMLElement) btn.focus(); // Ensure focus remains on the toggled button
       });
     });
   }
@@ -261,6 +396,65 @@
     });
   }
 
+  // Sidebar redimensionnable (desktop/tablette uniquement)
+  function initSidebarResize() {
+    if (window.innerWidth < 600) return; // Pas sur mobile
+    var sidebar = document.querySelector(".sidebar");
+    if (!sidebar) return;
+    var sidebarEl = sidebar instanceof HTMLElement ? sidebar : null;
+    if (!sidebarEl) return;
+    // Créer la poignée
+    var handle = document.createElement("div");
+    handle.className = "sidebar-resize-handle";
+    handle.setAttribute("tabindex", "0");
+    handle.setAttribute("role", "separator");
+    handle.setAttribute("aria-orientation", "vertical");
+    handle.setAttribute("aria-label", "Redimensionner la barre latérale");
+    sidebarEl.appendChild(handle);
+    // Appliquer largeur sauvegardée
+    var savedWidth = localStorage.getItem("takto-sidebar-width");
+    if (savedWidth && !isNaN(Number(savedWidth))) {
+      sidebarEl.style.width = savedWidth + "px";
+    }
+    let isResizing = false;
+    let startX = 0;
+    let startWidth = 0;
+    handle.addEventListener("mousedown", function (e) {
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = sidebarEl.offsetWidth;
+      document.body.style.cursor = "col-resize";
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", function (e) {
+      if (!isResizing) return;
+      let newWidth = startWidth + (e.clientX - startX);
+      newWidth = Math.max(180, Math.min(newWidth, 600));
+      sidebarEl.style.width = newWidth + "px";
+    });
+    document.addEventListener("mouseup", function (e) {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = "";
+        localStorage.setItem(
+          "takto-sidebar-width",
+          String(parseInt(sidebarEl.offsetWidth, 10))
+        );
+      }
+    });
+    // Accessibilité clavier
+    handle.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        let cur = sidebarEl.offsetWidth;
+        let delta = e.key === "ArrowLeft" ? -20 : 20;
+        let newWidth = Math.max(180, Math.min(cur + delta, 600));
+        sidebarEl.style.width = newWidth + "px";
+        localStorage.setItem("takto-sidebar-width", String(newWidth));
+        e.preventDefault();
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("js-features")) {
       renderApp();
@@ -274,6 +468,14 @@
     collapseCategoriesOnLoad();
     if (window.innerWidth <= 600) {
       initHamburger();
+    } else {
+      initSidebarResize();
+    }
+    // Enregistrement du service worker (support hors-ligne)
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js");
+      });
     }
   });
 })();

@@ -10,6 +10,21 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="app/css/styles.css" />
     <title>TAKTO - Dashboard</title>
+    <meta property="og:title" content="TAKTO - Dashboard" />
+    <meta
+      property="og:description"
+      content="Tableau de veille technologique minimaliste et accessible pour développeurs."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/public/TAKTO BLACK.svg" />
+    <meta property="og:url" content="https://takto.vercel.app/index.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TAKTO - Dashboard" />
+    <meta
+      name="twitter:description"
+      content="Tableau de veille technologique minimaliste et accessible pour développeurs."
+    />
+    <meta name="twitter:image" content="assets/public/TAKTO BLACK.svg" />
   </head>
   <body>
     <noscript>
@@ -56,6 +71,8 @@
               aria-label="Basculer le thème"
               title="Basculer le thème"
               type="button"
+              role="switch"
+              aria-checked="false"
             >
               <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
             </button>
@@ -472,12 +489,21 @@
           </nav>
           <div class="js-only">
             <div id="static-links-container">
-              <div class="collapsible-category">
-                <button class="collapsible-header" aria-expanded="false">
+              <div
+                class="collapsible-category"
+                role="region"
+                aria-labelledby="cat-docs-header"
+              >
+                <button
+                  class="collapsible-header"
+                  id="cat-docs-header"
+                  aria-expanded="false"
+                  aria-controls="cat-docs-content"
+                >
                   <span>📚 Documentation & Références</span>
                   <span class="arrow">▶</span>
                 </button>
-                <div class="collapsible-content">
+                <div class="collapsible-content" id="cat-docs-content">
                   <ul>
                     <li>
                       <a
@@ -933,7 +959,12 @@
             <h1 class="app-title">TAKTO</h1>
           </div>
         </aside>
-        <main id="main-content" class="main-content-area" tabindex="-1">
+        <main
+          id="main-content"
+          class="main-content-area"
+          tabindex="-1"
+          role="main"
+        >
           <section class="content-section">
             <h2>Bienvenue sur TAKTO</h2>
             <p>

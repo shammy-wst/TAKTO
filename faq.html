@@ -10,6 +10,21 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="app/css/styles.css" />
     <title>TAKTO - FAQ</title>
+    <meta property="og:title" content="TAKTO - FAQ" />
+    <meta
+      property="og:description"
+      content="FAQ du projet de veille technologique TAKTO."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/public/TAKTO BLACK.svg" />
+    <meta property="og:url" content="https://takto.vercel.app/faq.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TAKTO - FAQ" />
+    <meta
+      name="twitter:description"
+      content="FAQ du projet de veille technologique TAKTO."
+    />
+    <meta name="twitter:image" content="assets/public/TAKTO BLACK.svg" />
   </head>
   <body>
     <noscript>
@@ -56,6 +71,8 @@
               aria-label="Basculer le thème"
               title="Basculer le thème"
               type="button"
+              role="switch"
+              aria-checked="false"
             >
               <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
             </button>
@@ -202,16 +219,21 @@
           </nav>
           <div class="js-only">
             <div id="static-links-container">
-              <section class="collapsible-category">
+              <section
+                class="collapsible-category"
+                role="region"
+                aria-labelledby="cat-docs-header"
+              >
                 <button
                   class="collapsible-header"
+                  id="cat-docs-header"
                   aria-expanded="true"
-                  aria-controls="cat-docs"
+                  aria-controls="cat-docs-content"
                 >
                   <span>📚 Documentation & Références</span>
                   <span class="arrow" aria-hidden="true">▼</span>
                 </button>
-                <div class="collapsible-content" id="cat-docs">
+                <div class="collapsible-content" id="cat-docs-content">
                   <ul>
                     <li>
                       <a
@@ -699,7 +721,12 @@
             <h1 class="app-title">TAKTO</h1>
           </div>
         </aside>
-        <main id="main-content" class="main-content-area" tabindex="-1">
+        <main
+          id="main-content"
+          class="main-content-area"
+          tabindex="-1"
+          role="main"
+        >
           <section class="content-section">
             <h2>FAQ <span aria-hidden="true">❓</span></h2>
             <p>
