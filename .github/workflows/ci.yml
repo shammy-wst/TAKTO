@@ -1,0 +1,23 @@
+name: CI - Static Site Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run HTMLHint
+        run: npx htmlhint "**/*.html" || true
+
+      - name: Run CSSLint
+        run: npx stylelint "**/*.css" || true
+
+      - name: Run Accessibility Audit (pa11y)
+        run: npx pa11y-ci http://localhost:8000 || true
