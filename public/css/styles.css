@@ -501,6 +501,27 @@ button:focus {
     padding: 0;
     margin: 0;
   }
+  #static-links-container section {
+    margin-bottom: 0.7rem;
+  }
+  #static-links-container h3 {
+    font-size: 0.98rem;
+    margin-bottom: 0.2rem;
+  }
+  #static-links-container ul {
+    padding-left: 0.2em;
+  }
+  #static-links-container li {
+    margin-bottom: 0.2em;
+  }
+  #static-links-container a {
+    font-size: 0.97rem;
+    padding: 0.12em 0.2em;
+  }
+  .sidebar {
+    max-height: 45vh;
+    overflow-y: auto;
+  }
 }
 @media (max-width: 480px) {
   .header-content {
@@ -524,6 +545,27 @@ button:focus {
   }
   #add-link-form {
     padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+  }
+  #static-links-container section {
+    margin-bottom: 0.4rem;
+  }
+  #static-links-container h3 {
+    font-size: 0.93rem;
+    margin-bottom: 0.1rem;
+  }
+  #static-links-container ul {
+    padding-left: 0.1em;
+  }
+  #static-links-container li {
+    margin-bottom: 0.12em;
+  }
+  #static-links-container a {
+    font-size: 0.93rem;
+    padding: 0.08em 0.1em;
+  }
+  .sidebar {
+    max-height: 40vh;
+    overflow-y: auto;
   }
 }
 
