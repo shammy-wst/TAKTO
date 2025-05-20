@@ -12,7 +12,7 @@
     if (theme === "dark") {
       body.classList.add("dark-theme");
       if (logoImg && logoImg instanceof HTMLImageElement)
-        logoImg.src = "assets/public/TAKTO WHITE.svg";
+        logoImg.src = "TAKTO WHITE.svg";
       // Variables CSS dark
       document.documentElement.style.setProperty("--bg-color", "#18191a");
       document.documentElement.style.setProperty("--input-bg", "#23272f");
@@ -37,7 +37,7 @@
     } else {
       body.classList.remove("dark-theme");
       if (logoImg && logoImg instanceof HTMLImageElement)
-        logoImg.src = "assets/public/TAKTO BLACK.svg";
+        logoImg.src = "TAKTO BLACK.svg";
       // Variables CSS light
       document.documentElement.style.setProperty("--bg-color", "#f7f7f8");
       document.documentElement.style.setProperty("--input-bg", "#fff");
@@ -311,7 +311,7 @@
     var importInput = document.getElementById("import-links-input");
     if (importBtn && importInput && importInput instanceof HTMLInputElement) {
       importBtn.addEventListener("click", function () {
-        importInput.click();
+        if (importInput) importInput.click();
       });
       importInput.addEventListener("change", function (e) {
         const input = e.target;
@@ -420,6 +420,7 @@
     let startX = 0;
     let startWidth = 0;
     handle.addEventListener("mousedown", function (e) {
+      if (!sidebarEl) return;
       isResizing = true;
       startX = e.clientX;
       startWidth = sidebarEl.offsetWidth;
@@ -427,23 +428,24 @@
       e.preventDefault();
     });
     document.addEventListener("mousemove", function (e) {
-      if (!isResizing) return;
+      if (!isResizing || !sidebarEl) return;
       let newWidth = startWidth + (e.clientX - startX);
       newWidth = Math.max(180, Math.min(newWidth, 600));
       sidebarEl.style.width = newWidth + "px";
     });
     document.addEventListener("mouseup", function (e) {
-      if (isResizing) {
+      if (isResizing && sidebarEl) {
         isResizing = false;
         document.body.style.cursor = "";
         localStorage.setItem(
           "takto-sidebar-width",
-          String(parseInt(sidebarEl.offsetWidth, 10))
+          String(parseInt(sidebarEl.offsetWidth.toString(), 10))
         );
       }
     });
     // Accessibilité clavier
     handle.addEventListener("keydown", function (e) {
+      if (!sidebarEl) return;
       if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
         let cur = sidebarEl.offsetWidth;
         let delta = e.key === "ArrowLeft" ? -20 : 20;

@@ -5,29 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="TAKTO - Accessibilité du projet de veille technologique."
+      content="TAKTO - FAQ du projet de veille technologique."
     />
     <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="app/css/styles.css" />
-    <title>TAKTO - Accessibilité</title>
-    <meta property="og:title" content="TAKTO - Accessibilité" />
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <title>TAKTO - FAQ</title>
+    <meta property="og:title" content="TAKTO - FAQ" />
     <meta
       property="og:description"
-      content="Accessibilité du projet de veille technologique TAKTO."
+      content="FAQ du projet de veille technologique TAKTO."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/public/TAKTO BLACK.svg" />
-    <meta
-      property="og:url"
-      content="https://takto.vercel.app/accessibility.html"
-    />
+    <meta property="og:image" content="TAKTO BLACK.svg" />
+    <meta property="og:url" content="https://takto.vercel.app/faq.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="TAKTO - Accessibilité" />
+    <meta name="twitter:title" content="TAKTO - FAQ" />
     <meta
       name="twitter:description"
-      content="Accessibilité du projet de veille technologique TAKTO."
+      content="FAQ du projet de veille technologique TAKTO."
     />
-    <meta name="twitter:image" content="assets/public/TAKTO BLACK.svg" />
+    <meta name="twitter:image" content="TAKTO BLACK.svg" />
   </head>
   <body>
     <noscript>
@@ -51,7 +48,7 @@
         <div class="header-content">
           <a href="index.html" class="logo-link" aria-label="Accueil TAKTO">
             <img
-              src="assets/public/TAKTO BLACK.svg"
+              src="TAKTO BLACK.svg"
               alt="Logo TAKTO"
               width="90"
               height="44"
@@ -63,13 +60,9 @@
             <ul>
               <li><a href="index.html">Dashboard</a></li>
               <li><a href="readme.html">Readme</a></li>
-              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="faq.html" aria-current="page">FAQ</a></li>
               <li><a href="team.html">Équipe</a></li>
-              <li>
-                <a href="accessibility.html" aria-current="page"
-                  >Accessibilité</a
-                >
-              </li>
+              <li><a href="accessibility.html">Accessibilité</a></li>
             </ul>
           </nav>
           <div class="js-only">
@@ -92,13 +85,9 @@
             <ul>
               <li><a href="index.html">Dashboard</a></li>
               <li><a href="readme.html">Readme</a></li>
-              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="faq.html" aria-current="page">FAQ</a></li>
               <li><a href="team.html">Équipe</a></li>
-              <li>
-                <a href="accessibility.html" aria-current="page"
-                  >Accessibilité</a
-                >
-              </li>
+              <li><a href="accessibility.html">Accessibilité</a></li>
             </ul>
             <section>
               <h3>📚 Documentation & Références</h3>
@@ -739,137 +728,70 @@
           role="main"
         >
           <section class="content-section">
-            <h2>Accessibilité <span aria-hidden="true">♿</span></h2>
+            <h2>FAQ <span aria-hidden="true">❓</span></h2>
             <p>
-              TAKTO a été conçu dès le départ pour être accessible à tous, quels
-              que soient les besoins ou les outils utilisés.
-              <span aria-hidden="true">🌍</span>
+              Bienvenue dans la FAQ de TAKTO ! Retrouvez ici les réponses aux
+              questions fréquentes sur le projet, son accessibilité et son
+              utilisation. <span aria-hidden="true">💡</span>
             </p>
-            <div
-              style="
-                margin: 2rem 0;
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-              "
-            >
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>🎯 Objectif d'accessibilité</h3>
+            <div class="faq-list">
+              <div class="faq-card">
+                <h4>🧐 Qu'est-ce que TAKTO ?</h4>
                 <p>
-                  Respecter les critères WCAG 2.1 AAA : contraste élevé,
-                  navigation clavier, structure sémantique, ARIA, et
-                  compatibilité maximale, même sans JavaScript.
+                  TAKTO est un tableau de veille technologique minimaliste,
+                  statique et accessible, conçu pour centraliser et partager des
+                  ressources utiles aux développeurs.
                 </p>
               </div>
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>🛠️ Fonctionnalités accessibles</h3>
-                <ul style="margin: 0; padding-left: 1.2em">
-                  <li>
-                    Navigation au clavier (Tab, Entrée, Espace, flèches pour les
-                    catégories)
-                  </li>
-                  <li>Contraste élevé et thèmes clair/sombre</li>
-                  <li>HTML sémantique et balises ARIA là où nécessaire</li>
-                  <li>
-                    Structure logique et repères pour les lecteurs d'écran
-                  </li>
-                  <li>
-                    Responsive : utilisable sur mobile, tablette, ordinateur
-                  </li>
-                  <li>
-                    Fonctionne sans JavaScript (contenu et navigation
-                    accessibles)
-                  </li>
-                </ul>
-              </div>
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>🧑‍🦯 Utilisation avec technologies d'assistance</h3>
+              <div class="faq-card">
+                <h4>♿ Pourquoi l'accessibilité est-elle une priorité ?</h4>
                 <p>
-                  TAKTO est compatible avec les lecteurs d'écran (VoiceOver,
-                  NVDA, JAWS, etc.). Les liens, boutons et formulaires sont
-                  annoncés correctement. Les catégories du menu sont accessibles
-                  et repliables au clavier.
+                  Nous avons conçu TAKTO pour être utilisable par tous, y
+                  compris les personnes en situation de handicap. Navigation
+                  clavier, contraste élevé, structure sémantique et
+                  compatibilité avec les lecteurs d'écran sont au cœur du
+                  projet.
                 </p>
               </div>
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>⌨️ Raccourcis et navigation</h3>
-                <ul style="margin: 0; padding-left: 1.2em">
-                  <li>
-                    <strong>Tab</strong> : naviguer entre les éléments
-                    interactifs
-                  </li>
-                  <li>
-                    <strong>Entrée/Espace</strong> : ouvrir/fermer les
-                    catégories
-                  </li>
-                  <li>
-                    <strong>"Aller au contenu principal"</strong> : lien
-                    d'évitement en haut de page
-                  </li>
-                </ul>
-              </div>
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>🎨 Contraste et couleurs</h3>
+              <div class="faq-card">
+                <h4>🌗 Comment changer le thème clair/sombre ?</h4>
                 <p>
-                  Palette sobre, sans bleu vif, avec un contraste supérieur à
-                  7:1 pour garantir la lisibilité en toute circonstance.
+                  Utilisez le bouton en bas à droite de l'écran pour basculer
+                  entre le mode clair et sombre. Votre choix est mémorisé pour
+                  les prochaines visites !
                 </p>
               </div>
-              <div
-                style="
-                  background: var(--secondary);
-                  border-radius: var(--radius);
-                  padding: 1.2rem 1.5rem;
-                  border: 1px solid var(--border-highlight);
-                "
-              >
-                <h3>📣 Signaler un problème</h3>
+              <div class="faq-card">
+                <h4>🔗 Puis-je ajouter mes propres liens ?</h4>
                 <p>
-                  Vous avez rencontré un souci d'accessibilité ? Contactez
-                  l'équipe TAKTO pour nous aider à améliorer l'expérience pour
-                  tous !
+                  Oui ! Si JavaScript est activé, un formulaire vous permet
+                  d'ajouter, rechercher et supprimer vos liens personnels,
+                  stockés localement dans votre navigateur.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🛡️ Mes données sont-elles privées ?</h4>
+                <p>
+                  Absolument. Toutes vos données restent sur votre appareil,
+                  dans le stockage local du navigateur. Aucun envoi vers un
+                  serveur.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>📱 TAKTO est-il responsive ?</h4>
+                <p>
+                  Oui, l'interface s'adapte à tous les écrans, du mobile au
+                  grand écran, pour une expérience optimale partout.
+                </p>
+              </div>
+              <div class="faq-card">
+                <h4>🧑‍💻 Qui est derrière TAKTO ?</h4>
+                <p>
+                  Une équipe d'étudiants passionnés, réunis pour un projet
+                  scolaire, chacun apportant sa touche personnelle !
                 </p>
               </div>
             </div>
-            <p>
-              Nous nous engageons à maintenir TAKTO accessible et à l'améliorer
-              en continu. <span aria-hidden="true">🤝</span>
-            </p>
           </section>
         </main>
       </div>
@@ -886,6 +808,6 @@
         </div>
       </footer>
     </div>
-    <script src="app/js/app.js" defer></script>
+    <script src="../src/js/app.js" defer></script>
   </body>
 </html>
