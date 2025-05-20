@@ -978,17 +978,37 @@
           role="main"
         >
           <section class="content-section">
-            <h1>TAKTO <span aria-hidden="true">🚀</span></h1>
-            <p
-              class="app-title"
-              style="font-size: 1.2rem; font-weight: 500; margin-bottom: 1.5rem"
-            >
-              Tableau de veille technologique minimaliste, accessible et
-              statique, inspiré par Notion.
+            <h1>TAKTO</h1>
+            <blockquote>
+              <strong>TAKTO</strong> est un tableau de veille technologique
+              minimaliste, accessible et statique, inspiré par Notion, conçu
+              pour centraliser et partager des ressources tech essentielles.
+            </blockquote>
+            <hr />
+            <h2>🚀 Présentation</h2>
+            <p>
+              TAKTO est une application web statique, sans backend, qui permet
+              de :
             </p>
-            <hr style="margin: 1.5rem 0" />
+            <ul>
+              <li>
+                Centraliser des liens de veille technologique (docs, blogs,
+                outils, etc.)
+              </li>
+              <li>
+                Ajouter, rechercher et supprimer vos propres liens (stockés
+                localement)
+              </li>
+              <li>
+                Naviguer dans une interface ultra-accessible (WCAG 2.1 AAA)
+              </li>
+              <li>
+                Profiter d'un design sobre, responsive et inspiré de Notion
+              </li>
+            </ul>
+            <hr />
             <h2>✨ Fonctionnalités principales</h2>
-            <ul style="margin-bottom: 1.5rem">
+            <ul>
               <li>
                 <strong>100% statique</strong> : HTML/CSS, JS pour
                 l'amélioration progressive (aucun backend)
@@ -999,7 +1019,7 @@
               </li>
               <li>
                 <strong>Thème clair/sombre</strong> (toggle, sauvegardé en
-                local)
+                local, favicon dynamique)
               </li>
               <li>
                 <strong>Sidebar à catégories</strong> : liens tech classés,
@@ -1008,6 +1028,7 @@
               <li>
                 <strong>Ajout/Suppression de liens</strong> (JS, localStorage)
               </li>
+              <li><strong>Export/Import de liens</strong> (JSON)</li>
               <li><strong>Responsive</strong> : mobile, tablette, desktop</li>
               <li>
                 <strong>Aucune navigation JS</strong> : tout via
@@ -1017,77 +1038,238 @@
                 <strong>Design Notion-like</strong> : police sans-serif, bords
                 arrondis, ombres subtiles, palette sobre
               </li>
+              <li>
+                <strong>Sidebar redimensionnable</strong> (desktop/tablette)
+              </li>
+              <li><strong>Support hors-ligne (PWA/service worker)</strong></li>
+              <li>
+                <strong>Icônes PWA optimisées</strong> (PNG multi-tailles,
+                manifest.json)
+              </li>
+              <li>
+                <strong>Favicon dynamique</strong> selon le thème (clair/sombre)
+              </li>
+              <li>
+                <strong>Aucune donnée n'est envoyée, tout reste local</strong>
+              </li>
             </ul>
+            <hr />
             <h2>🗂️ Structure du projet</h2>
-            <pre
-              style="
-                background: var(--secondary);
-                border-radius: var(--radius);
-                padding: 1em;
-                font-size: 0.98em;
-                overflow-x: auto;
-                margin-bottom: 1.5rem;
-              "
-            ><code>TAKTO/
-├── index.html
-├── readme.html
-├── faq.html
-├── team.html
-├── accessibility.html
-├── app/
+            <pre><code>TAKTO/
+├── public/                # Fichiers statiques prêts pour la prod
+│   ├── index.html
+│   ├── readme.html
+│   ├── faq.html
+│   ├── team.html
+│   ├── accessibility.html
+│   ├── 404.html
+│   ├── favicon.ico
+│   ├── TAKTO BLACK.svg
+│   ├── TAKTO WHITE.svg
+│   ├── manifest.json
+│   ├── sw.js
+│   ├── sitemap.xml
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── app.js
+│   └── icons/
+│       ├── icon-black-192.png
+│       ├── icon-black-512.png
+│       ├── icon-white-192.png
+│       └── icon-white-512.png
+├── src/                   # Code source (à modifier ici)
 │   ├── css/
 │   │   └── styles.css
 │   └── js/
 │       └── app.js
-├── assets/
-│   └── public/
-│       └── TAKTO BLACK.svg
-├── favicon.ico
-└── README.md</code></pre>
+├── .github/               # Workflows CI/CD
+│   └── workflows/
+│       └── ci.yml
+├── assets/                # (optionnel) autres assets
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── README.md
+└── package.json</code></pre>
+            <p>
+              <strong>NB : </strong>Développez dans <code>src/</code>, puis
+              copiez les fichiers dans <code>public/</code> pour la prod.
+            </p>
+            <hr />
+            <h2>🛠️ Installation & Utilisation</h2>
+            <ol>
+              <li>
+                <strong>Cloner le repo :</strong>
+                <pre><code>git clone https://github.com/&lt;ton-username&gt;/TAKTO.git
+cd TAKTO</code></pre>
+              </li>
+              <li>
+                <strong>Lancer en local (optionnel) :</strong>
+                <pre><code>npx serve public
+# ou
+python3 -m http.server 8000
+# puis ouvrir http://localhost:8000/index.html</code></pre>
+              </li>
+              <li>
+                <strong
+                  >Ouvrir <code>public/index.html</code> dans votre
+                  navigateur</strong
+                >
+              </li>
+              <li><strong>Ajouter vos liens</strong> (si JS activé)</li>
+              <li><strong>Naviguer, explorer, changer de thème</strong></li>
+              <li>
+                <strong>Aucune donnée n'est envoyée, tout reste local</strong>
+              </li>
+            </ol>
+            <hr />
             <h2>♿ Accessibilité</h2>
-            <ul style="margin-bottom: 1.5rem">
+            <ul>
               <li>Contraste &gt; 7:1, sans bleu vif</li>
               <li>Navigation clavier complète (sidebar, liens, formulaires)</li>
               <li>Structure HTML sémantique, ARIA là où nécessaire</li>
               <li>Fonctionne sans JS (mode fallback accessible)</li>
               <li>Testé avec lecteurs d'écran et outils d'audit</li>
-            </ul>
-            <h2>📱 Responsive & Design</h2>
-            <ul style="margin-bottom: 1.5rem">
-              <li>Deux colonnes : sidebar fixe + contenu principal</li>
-              <li>Sidebar collapsible (JS) ou statique (no-JS)</li>
-              <li>Thème clair/sombre, police "Inter"/sans-serif</li>
-              <li>Mobile : menu burger, sidebar adaptée, footer compact</li>
-            </ul>
-            <h2>🛠️ Utilisation</h2>
-            <ol style="margin-bottom: 1.5rem">
               <li>
                 <strong
-                  >Ouvrez <code>index.html</code> dans votre navigateur</strong
+                  >Compatible avec la narration vocale (lecteurs
+                  d'écran)</strong
                 >
               </li>
-              <li><strong>Ajoutez vos liens</strong> (si JS activé)</li>
-              <li><strong>Naviguez, explorez, changez de thème</strong></li>
+            </ul>
+            <hr />
+            <h2>📱 Responsive & Design</h2>
+            <ul>
+              <li>Deux colonnes : sidebar fixe + contenu principal</li>
+              <li>Sidebar collapsible (JS) ou statique (no-JS)</li>
+              <li>Thème clair/sombre, favicon dynamique, logo adapté</li>
+              <li>Mobile : menu burger, sidebar adaptée, footer compact</li>
+            </ul>
+            <hr />
+            <h2>🔒 Données & Vie privée</h2>
+            <ul>
+              <li><strong>Aucune donnée n'est envoyée</strong></li>
               <li>
-                <strong>Aucune donnée n'est envoyée, tout reste local</strong>
+                Les liens ajoutés sont stockés dans
+                <code>localStorage</code> (navigateur)
               </li>
-            </ol>
+              <li>Export/Import possible au format JSON</li>
+            </ul>
+            <hr />
+            <h2>🛡️ PWA & Hors-ligne</h2>
+            <ul>
+              <li>
+                Service worker (<code>sw.js</code>) pour le support offline
+              </li>
+              <li>
+                Ajoute TAKTO à ton écran d'accueil (<code>manifest.json</code>)
+              </li>
+              <li>
+                Icônes PWA optimisées (PNG 192x192 et 512x512, version noire et
+                blanche)
+              </li>
+              <li>Favicon dynamique selon le thème</li>
+              <li>
+                Fonctionne même sans connexion après le premier chargement
+              </li>
+            </ul>
+            <hr />
+            <h2>📝 Changelog</h2>
+            <h3>[1.0.0] - 2024-06-XX</h3>
+            <ul>
+              <li>Première version publique :</li>
+              <ul>
+                <li>Dashboard statique, accessible, responsive</li>
+                <li>Sidebar à catégories, collapsibles (JS)</li>
+                <li>Thème clair/sombre, favicon dynamique, logo adapté</li>
+                <li>Ajout/suppression de liens (localStorage)</li>
+                <li>Export/Import de liens (JSON)</li>
+                <li>Pages : index, readme, faq, équipe, accessibilité, 404</li>
+                <li>Design Notion-like, palette sobre</li>
+                <li>Accessibilité WCAG 2.1 AAA</li>
+                <li>
+                  PWA : manifest.json, service worker, support offline, icônes
+                  PNG multi-tailles
+                </li>
+                <li>Structure de projet professionnelle (src/ vs public/)</li>
+                <li>Sidebar redimensionnable (desktop/tablette)</li>
+                <li>Aucune donnée envoyée, tout reste local</li>
+              </ul>
+            </ul>
+            <h4>Suivi des évolutions</h4>
+            <ul>
+              <li>
+                <strong>Refonte structure prod</strong> : séparation claire src/
+                (dev) et public/ (prod)
+              </li>
+              <li>
+                <strong>Uniformisation imports CSS/JS</strong> : chemins
+                relatifs propres pour la prod
+              </li>
+              <li>
+                <strong>Ajout manifest.json</strong> : PWA ready, icônes PNG
+                multi-tailles
+              </li>
+              <li>
+                <strong>Favicon dynamique</strong> : changement auto selon le
+                thème (clair/sombre)
+              </li>
+              <li>
+                <strong>Accessibilité renforcée</strong> : navigation clavier,
+                ARIA, contrastes, responsive
+              </li>
+              <li>
+                <strong>Optimisation PWA</strong> : service worker, offline,
+                installable sur mobile/desktop
+              </li>
+            </ul>
+            <hr />
             <h2>🤝 Contribuer</h2>
-            <ul style="margin-bottom: 1.5rem">
-              <li>Forkez le repo, proposez vos améliorations !</li>
-              <li>Respectez l'accessibilité et la philosophie minimaliste</li>
-              <li>Suggestions, bugs : issues bienvenues</li>
-            </ul>
-            <h2>👥 Équipe & Crédits</h2>
-            <ul style="margin-bottom: 1.5rem">
+            <p>
+              Merci de votre intérêt pour TAKTO ! Ce projet vise la simplicité,
+              l'accessibilité (WCAG AAA), et la sobriété numérique.
+            </p>
+            <h3>Principes</h3>
+            <ul>
+              <li>Respectez le design minimaliste et accessible.</li>
+              <li>N'ajoutez pas de dépendances lourdes ou de backend.</li>
               <li>
-                <strong>Icham</strong> — Coordination, accessibilité, design
+                Toute fonctionnalité JS doit être une amélioration progressive.
               </li>
-              <li><strong>Samy</strong> — Veille, idées, ressources</li>
-              <li><strong>Wissem</strong> — Développement, optimisation</li>
-              <li><strong>Victor</strong> — UI/UX, design</li>
-              <li><strong>Maxime</strong> — Tests, documentation</li>
+              <li>
+                Testez l'accessibilité (clavier, lecteurs d'écran, contraste).
+              </li>
             </ul>
+            <h3>Comment contribuer</h3>
+            <ol>
+              <li>Forkez le repo et créez une branche.</li>
+              <li>
+                Faites vos modifications (HTML/CSS/JS statique dans
+                <code>src/</code>).
+              </li>
+              <li>
+                Copiez vos changements dans <code>public/</code> pour la prod.
+              </li>
+              <li>Vérifiez l'accessibilité et le responsive.</li>
+              <li>Ouvrez une Pull Request avec une description claire.</li>
+            </ol>
+            <h3>Suggestions</h3>
+            <ul>
+              <li>Proposez des liens tech utiles.</li>
+              <li>Améliorez l'accessibilité ou la documentation.</li>
+              <li>Corrigez des bugs ou proposez des optimisations.</li>
+            </ul>
+            <hr />
+            <h2>👥 Équipe & Crédits</h2>
+            <ul>
+              <li>Icham — Coordination, accessibilité, design</li>
+              <li>Samy — Veille, idées, ressources</li>
+              <li>Wissem — Développement, optimisation</li>
+              <li>Victor — UI/UX, design</li>
+              <li>Maxime — Tests, documentation</li>
+              <li>Yanis — Tests, débogage</li>
+            </ul>
+            <hr />
             <h2>📄 Licence</h2>
             <p>MIT — Utilisation libre, attribution appréciée.</p>
           </section>

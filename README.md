@@ -19,15 +19,18 @@ TAKTO est une application web statique, sans backend, qui permet de :
 
 - **100% statique** : HTML/CSS, JS pour l'amélioration progressive (aucun backend)
 - **Accessibilité AAA** : contraste élevé, navigation clavier, ARIA, structure sémantique
-- **Thème clair/sombre** (toggle, sauvegardé en local)
+- **Thème clair/sombre** (toggle, sauvegardé en local, favicon dynamique)
 - **Sidebar à catégories** : liens tech classés, collapsibles (JS), statiques (no-JS)
 - **Ajout/Suppression de liens** (JS, localStorage)
+- **Export/Import de liens** (JSON)
 - **Responsive** : mobile, tablette, desktop
 - **Aucune navigation JS** : tout via `<a>`
 - **Design Notion-like** : police sans-serif, bords arrondis, ombres subtiles, palette sobre
-- **Export/Import de liens** (JSON)
 - **Sidebar redimensionnable** (desktop/tablette)
 - **Support hors-ligne (PWA/service worker)**
+- **Icônes PWA optimisées** (PNG multi-tailles, manifest.json)
+- **Favicon dynamique** selon le thème (clair/sombre)
+- **Aucune donnée n'est envoyée, tout reste local**
 
 ---
 
@@ -35,7 +38,7 @@ TAKTO est une application web statique, sans backend, qui permet de :
 
 ```text
 TAKTO/
-├── public/                # Fichiers statiques accessibles (HTML, favicon, manifest, sw.js)
+├── public/                # Fichiers statiques prêts pour la prod
 │   ├── index.html
 │   ├── readme.html
 │   ├── faq.html
@@ -43,28 +46,36 @@ TAKTO/
 │   ├── accessibility.html
 │   ├── 404.html
 │   ├── favicon.ico
+│   ├── TAKTO BLACK.svg
+│   ├── TAKTO WHITE.svg
 │   ├── manifest.json
-│   └── sw.js
-├── src/                   # Code source (CSS, JS)
+│   ├── sw.js
+│   ├── sitemap.xml
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── app.js
+│   └── icons/
+│       ├── icon-black-192.png
+│       ├── icon-black-512.png
+│       ├── icon-white-192.png
+│       └── icon-white-512.png
+├── src/                   # Code source (à modifier ici)
 │   ├── css/
 │   │   └── styles.css
 │   └── js/
 │       └── app.js
-├── assets/                # Images, logos, ressources statiques
-│   └── public/
-│       ├── TAKTO BLACK.svg
-│       └── TAKTO WHITE.svg
 ├── .github/               # Workflows CI/CD
 │   └── workflows/
 │       └── ci.yml
-├── sitemap.xml
+├── assets/                # (optionnel) autres assets
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── README.md
 └── package.json
 ```
 
-**NB :** Si tu clones ce repo, place les fichiers HTML, favicon, manifest et sw.js dans `public/`, le code source dans `src/`, et les assets dans `assets/`.
+**NB :** Développez dans `src/`, puis copiez les fichiers dans `public/` pour la prod.
 
 ---
 
@@ -100,6 +111,7 @@ TAKTO/
 - Structure HTML sémantique, ARIA là où nécessaire
 - Fonctionne sans JS (mode fallback accessible)
 - Testé avec lecteurs d'écran et outils d'audit
+- **Compatible avec la narration vocale (lecteurs d'écran)**
 
 ---
 
@@ -107,7 +119,7 @@ TAKTO/
 
 - Deux colonnes : sidebar fixe + contenu principal
 - Sidebar collapsible (JS) ou statique (no-JS)
-- Thème clair/sombre, police "Inter"/sans-serif
+- Thème clair/sombre, favicon dynamique, logo adapté
 - Mobile : menu burger, sidebar adaptée, footer compact
 
 ---
@@ -124,6 +136,8 @@ TAKTO/
 
 - Service worker (`sw.js`) pour le support offline
 - Ajoute TAKTO à ton écran d'accueil (manifest.json)
+- Icônes PWA optimisées (PNG 192x192 et 512x512, version noire et blanche)
+- Favicon dynamique selon le thème
 - Fonctionne même sans connexion après le premier chargement
 
 ---
@@ -135,11 +149,25 @@ TAKTO/
 - Première version publique :
   - Dashboard statique, accessible, responsive
   - Sidebar à catégories, collapsibles (JS)
-  - Thème clair/sombre, sauvegarde locale
+  - Thème clair/sombre, favicon dynamique, logo adapté
   - Ajout/suppression de liens (localStorage)
-  - Pages : index, readme, faq, équipe, accessibilité
+  - Export/Import de liens (JSON)
+  - Pages : index, readme, faq, équipe, accessibilité, 404
   - Design Notion-like, palette sobre
   - Accessibilité WCAG 2.1 AAA
+  - PWA : manifest.json, service worker, support offline, icônes PNG multi-tailles
+  - Structure de projet professionnelle (src/ vs public/)
+  - Sidebar redimensionnable (desktop/tablette)
+  - Aucune donnée envoyée, tout reste local
+
+#### Suivi des évolutions
+
+- **Refonte structure prod** : séparation claire src/ (dev) et public/ (prod)
+- **Uniformisation imports CSS/JS** : chemins relatifs propres pour la prod
+- **Ajout manifest.json** : PWA ready, icônes PNG multi-tailles
+- **Favicon dynamique** : changement auto selon le thème (clair/sombre)
+- **Accessibilité renforcée** : navigation clavier, ARIA, contrastes, responsive
+- **Optimisation PWA** : service worker, offline, installable sur mobile/desktop
 
 ---
 
@@ -157,9 +185,10 @@ Merci de votre intérêt pour TAKTO ! Ce projet vise la simplicité, l'accessibi
 ### Comment contribuer
 
 1. Forkez le repo et créez une branche.
-2. Faites vos modifications (HTML/CSS/JS statique).
-3. Vérifiez l'accessibilité et le responsive.
-4. Ouvrez une Pull Request avec une description claire.
+2. Faites vos modifications (HTML/CSS/JS statique dans `src/`).
+3. Copiez vos changements dans `public/` pour la prod.
+4. Vérifiez l'accessibilité et le responsive.
+5. Ouvrez une Pull Request avec une description claire.
 
 ### Suggestions
 
@@ -173,11 +202,12 @@ Merci !
 
 ## 👥 Équipe & Crédits
 
-- Icham — Coordination, accessibilité, design
+- Icham — UI/UX, design, design
 - Samy — Veille, idées, ressources
 - Wissem — Développement, optimisation
-- Victor — UI/UX, design
-- Maxime — Tests, documentation
+- Victor — Coordination
+- Maxime — A ccessibilité, documentation
+- Yanis — Tests
 
 ---
 
