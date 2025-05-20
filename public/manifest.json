@@ -1,0 +1,21 @@
+{
+  "name": "TAKTO",
+  "short_name": "TAKTO",
+  "description": "Tableau de veille technologique minimaliste, accessible et statique.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#23272f",
+  "theme_color": "#23272f",
+  "icons": [
+    {
+      "src": "TAKTO BLACK.svg",
+      "sizes": "90x44",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
