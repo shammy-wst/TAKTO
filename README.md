@@ -1,124 +1,115 @@
 # TAKTO
 
-> **TAKTO** est un tableau de veille technologique minimaliste, accessible et statique, inspiré par Notion, conçu pour centraliser et partager des ressources tech essentielles.
+> **TAKTO** est un tableau de veille technologique **ultra simple** et **accessible** pour tous, même sans expérience technique. Centralisez, organisez et partagez vos ressources web préférées en un clic !
 
 ---
 
-## 🚀 Présentation
+## ✨ À quoi sert TAKTO ?
 
-TAKTO est une application web statique, sans backend, qui permet de :
-
-- Centraliser des liens de veille technologique (docs, blogs, outils, etc.)
-- Ajouter, rechercher et supprimer vos propres liens (stockés localement)
-- Naviguer dans une interface ultra-accessible (WCAG 2.1 AAA)
-- Profiter d'un design sobre, responsive et inspiré de Notion
-
----
-
-## ✨ Fonctionnalités principales
-
-- **100% statique** : HTML/CSS, JS pour l'amélioration progressive (aucun backend)
-- **Accessibilité AAA** : contraste élevé, navigation clavier, ARIA, structure sémantique
-- **Thème clair/sombre** (toggle, sauvegardé en local, favicon dynamique)
-- **Sidebar à catégories** : liens tech classés, collapsibles (JS), statiques (no-JS)
-- **Ajout/Suppression de liens** (JS, localStorage)
-- **Export/Import de liens** (JSON)
-- **Responsive** : mobile, tablette, desktop
-- **Aucune navigation JS** : tout via `<a>`
-- **Design Notion-like** : police sans-serif, bords arrondis, ombres subtiles, palette sobre
-- **Sidebar redimensionnable** (desktop/tablette)
-- **Support hors-ligne (PWA/service worker)**
-- **Icônes PWA optimisées** (PNG multi-tailles, manifest.json)
-- **Favicon dynamique** selon le thème (clair/sombre)
-- **Aucune donnée n'est envoyée, tout reste local**
+- 📚 **Centraliser** vos liens tech (docs, blogs, outils, etc.)
+- 🌓 **Changer de thème** (clair/sombre) en un clic
+- ♿ **Accessible à tous** (navigation clavier, contraste, ARIA)
+- 📱 **Responsive** : fonctionne sur mobile, tablette, PC
+- 🔒 **Respect de la vie privée** : vos données restent sur votre appareil
 
 ---
 
-## 🗂️ Structure du projet
+## 🚀 Comment installer TAKTO ? (Débutant friendly)
+
+1. **Téléchargez le projet**
+
+   - Cliquez sur “Code” puis “Download ZIP” ou utilisez la commande :
+
+     ```bash
+     git clone https://github.com/<votre-username>/TAKTO.git
+     cd TAKTO
+     ```
+
+2. **Ouvrez le dossier**
+
+   - Double-cliquez sur le dossier téléchargé pour l'ouvrir.
+
+3. **Lancez TAKTO en local**
+
+   - Si vous avez Node.js :
+
+     ```bash
+     npx serve public
+     ```
+
+   - Sinon, ouvrez le fichier `public/index.html` directement dans votre navigateur (clic droit > ouvrir avec).
+
+> 💡 **Astuce débutant** : Pas besoin d'installer quoi que ce soit pour utiliser TAKTO, tout fonctionne dans votre navigateur !
+
+---
+
+## 🖱️ Comment utiliser TAKTO ?
+
+- **Ajouter un lien** : Cliquez sur "Ajouter un lien", remplissez le formulaire, validez.
+- **Supprimer un lien** : Cliquez sur la corbeille à côté du lien.
+- **Changer de thème** : Cliquez sur l'icône lune/soleil en haut à droite.
+- **Exporter vos liens** : Cliquez sur "Exporter" pour sauvegarder vos liens en fichier .json.
+- **Importer vos liens** : Cliquez sur "Importer" et sélectionnez votre fichier .json.
+
+---
+
+## 🗂️ Structure du projet (explications simples)
 
 ```text
 TAKTO/
-├── public/                # Fichiers statiques prêts pour la prod
-│   ├── index.html
-│   ├── readme.html
-│   ├── faq.html
-│   ├── team.html
-│   ├── accessibility.html
-│   ├── 404.html
-│   ├── favicon.ico
-│   ├── TAKTO BLACK.svg
-│   ├── TAKTO WHITE.svg
-│   ├── manifest.json
-│   ├── sw.js
-│   ├── sitemap.xml
+├── public/                # Fichiers prêts à être utilisés dans le navigateur
+│   ├── index.html         # Page principale
+│   ├── readme.html        # Documentation intégrée
+│   ├── faq.html           # Foire aux questions
+│   ├── team.html          # Présentation de l'équipe
+│   ├── accessibility.html # Détails sur l'accessibilité
+│   ├── 404.html           # Page d'erreur
+│   ├── favicon.ico        # Icône du site
+│   ├── TAKTO BLACK.svg    # Logo version noire
+│   ├── TAKTO WHITE.svg    # Logo version blanche
+│   ├── manifest.json      # Fichier PWA
+│   ├── sw.js              # Service Worker (hors-ligne)
+│   ├── sitemap.xml        # Plan du site
 │   ├── css/
-│   │   └── styles.css
+│   │   └── styles.css     # Feuille de style principale
 │   ├── js/
-│   │   └── app.js
-│   └── icons/
-│       ├── icon-black-192.png
-│       ├── icon-black-512.png
-│       ├── icon-white-192.png
-│       └── icon-white-512.png
-├── src/                   # Code source (à modifier ici)
+│   │   └── app.js         # Script principal
+│   └── icons/             # Icônes PWA
+├── src/                   # Code source à modifier (dev)
 │   ├── css/
 │   │   └── styles.css
 │   └── js/
 │       └── app.js
-├── .github/               # Workflows CI/CD
+├── .github/               # Automatisation GitHub
 │   └── workflows/
 │       └── ci.yml
-├── assets/                # (optionnel) autres assets
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── README.md
-└── package.json
+├── assets/                # Images, captures d'écran, etc.
+├── CHANGELOG.md           # Historique des versions
+├── CONTRIBUTING.md        # Guide de contribution
+├── README.md              # Ce fichier !
+└── package.json           # Dépendances JS (optionnel)
 ```
 
-**NB :** Développez dans `src/`, puis copiez les fichiers dans `public/` pour la prod.
-
----
-
-## 🛠️ Installation & Utilisation
-
-1. **Cloner le repo :**
-
-   ```bash
-   git clone https://github.com/<ton-username>/TAKTO.git
-   cd TAKTO
-   ```
-
-2. **Lancer en local (optionnel) :**
-
-   ```bash
-   npx serve public
-   # ou
-   python3 -m http.server 8000
-   # puis ouvrir http://localhost:8000/index.html
-   ```
-
-3. **Ouvrir `public/index.html` dans votre navigateur**
-4. **Ajouter vos liens** (si JS activé)
-5. **Naviguer, explorer, changer de thème**
-6. **Aucune donnée n'est envoyée, tout reste local**
+**NB :** Modifiez le code dans `src/`, puis copiez dans `public/` pour la mise en ligne.
 
 ---
 
 ## ♿ Accessibilité
 
-- Contraste > 7:1, sans bleu vif
-- Navigation clavier complète (sidebar, liens, formulaires)
+TAKTO est conçu pour être utilisable par tous :
+
+- Navigation au clavier (Tab, Entrée, Espace)
+- Contraste élevé, police lisible
+- Compatible lecteurs d'écran (VoiceOver, NVDA, JAWS)
+- Fonctionne même sans JavaScript
 - Structure HTML sémantique, ARIA là où nécessaire
-- Fonctionne sans JS (mode fallback accessible)
-- Testé avec lecteurs d'écran et outils d'audit
-- **Compatible avec la narration vocale (lecteurs d'écran)**
 
 ---
 
 ## 📱 Responsive & Design
 
 - Deux colonnes : sidebar fixe + contenu principal
-- Sidebar collapsible (JS) ou statique (no-JS)
+- Sidebar repliable (JS) ou statique (sans JS)
 - Thème clair/sombre, favicon dynamique, logo adapté
 - Mobile : menu burger, sidebar adaptée, footer compact
 
@@ -135,82 +126,64 @@ TAKTO/
 ## 🛡️ PWA & Hors-ligne
 
 - Service worker (`sw.js`) pour le support offline
-- Ajoute TAKTO à ton écran d'accueil (manifest.json)
+- Ajoutez TAKTO à votre écran d'accueil (manifest.json)
 - Icônes PWA optimisées (PNG 192x192 et 512x512, version noire et blanche)
 - Favicon dynamique selon le thème
 - Fonctionne même sans connexion après le premier chargement
 
 ---
 
-## 📝 Changelog
+## ❓ FAQ
 
-### [1.0.0] - 2024-06-XX
-
-- Première version publique :
-  - Dashboard statique, accessible, responsive
-  - Sidebar à catégories, collapsibles (JS)
-  - Thème clair/sombre, favicon dynamique, logo adapté
-  - Ajout/suppression de liens (localStorage)
-  - Export/Import de liens (JSON)
-  - Pages : index, readme, faq, équipe, accessibilité, 404
-  - Design Notion-like, palette sobre
-  - Accessibilité WCAG 2.1 AAA
-  - PWA : manifest.json, service worker, support offline, icônes PNG multi-tailles
-  - Structure de projet professionnelle (src/ vs public/)
-  - Sidebar redimensionnable (desktop/tablette)
-  - Aucune donnée envoyée, tout reste local
-
-#### Suivi des évolutions
-
-- **Refonte structure prod** : séparation claire src/ (dev) et public/ (prod)
-- **Uniformisation imports CSS/JS** : chemins relatifs propres pour la prod
-- **Ajout manifest.json** : PWA ready, icônes PNG multi-tailles
-- **Favicon dynamique** : changement auto selon le thème (clair/sombre)
-- **Accessibilité renforcée** : navigation clavier, ARIA, contrastes, responsive
-- **Optimisation PWA** : service worker, offline, installable sur mobile/desktop
+- **Mes liens sont-ils partagés ?**
+  > Non, tout reste sur votre appareil.
+- **Je ne vois pas mes liens sur un autre ordinateur ?**
+  > Les liens sont stockés localement, ils ne sont pas synchronisés.
+- **Comment réinitialiser TAKTO ?**
+  > Supprimez les liens un par un ou videz le stockage local de votre navigateur.
+- **Je ne connais rien au code, puis-je utiliser TAKTO ?**
+  > Oui, il suffit d'ouvrir le fichier `index.html` dans votre navigateur !
+- **Comment signaler un bug ou une suggestion ?**
+  > Ouvrez une "issue" sur GitHub ou contactez l'équipe.
 
 ---
 
 ## 🤝 Contribuer
 
-Merci de votre intérêt pour TAKTO ! Ce projet vise la simplicité, l'accessibilité (WCAG AAA), et la sobriété numérique.
+Vous souhaitez améliorer TAKTO ? Merci !
 
-### Principes
+- Forkez le projet, créez une branche, proposez vos modifications.
+- Ouvrez une "issue" pour signaler un bug ou suggérer une amélioration.
+- Respectez le design minimaliste et l'accessibilité.
+- Testez vos modifications sur mobile et avec un lecteur d'écran si possible.
 
-- Respectez le design minimaliste et accessible.
-- N'ajoutez pas de dépendances lourdes ou de backend.
-- Toute fonctionnalité JS doit être une amélioration progressive.
-- Testez l'accessibilité (clavier, lecteurs d'écran, contraste).
+### Exemple de contribution
 
-### Comment contribuer
-
-1. Forkez le repo et créez une branche.
-2. Faites vos modifications (HTML/CSS/JS statique dans `src/`).
-3. Copiez vos changements dans `public/` pour la prod.
-4. Vérifiez l'accessibilité et le responsive.
-5. Ouvrez une Pull Request avec une description claire.
-
-### Suggestions
-
-- Proposez des liens tech utiles.
-- Améliorez l'accessibilité ou la documentation.
-- Corrigez des bugs ou proposez des optimisations.
-
-Merci !
+1. Forkez le repo
+2. Créez une branche : `git checkout -b ma-feature`
+3. Faites vos modifications dans `src/`
+4. Copiez dans `public/` si besoin
+5. Ouvrez une Pull Request avec une description claire
 
 ---
 
 ## 👥 Équipe & Crédits
 
-- Icham — UI/UX, design, design
+- Icham — UI/UX, accessibilité, design
 - Samy — Veille, idées, ressources
 - Wissem — Développement, optimisation
 - Victor — Coordination
-- Maxime — A ccessibilité, documentation
+- Maxime — Accessibilité, documentation
 - Yanis — Tests
+
+Merci à tous les contributeurs et utilisateurs !
 
 ---
 
 ## 📄 Licence
 
 MIT — Utilisation libre, attribution appréciée.
+
+---
+
+> **Besoin d'aide ?** Ouvrez une issue sur GitHub ou contactez l'équipe TAKTO. Toute question est la bienvenue, même (et surtout) si vous débutez !
