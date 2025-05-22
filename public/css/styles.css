@@ -379,8 +379,11 @@ button:focus {
     height: 40vh !important;
     min-height: 0 !important;
     max-height: 40vh !important;
-    width: 100vw;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
     overflow-y: auto !important;
+    overflow-x: hidden !important;
   }
   .main-content-area {
     max-height: calc(100vh - var(--header-height) - 48px);
@@ -542,6 +545,7 @@ button:focus {
   }
   body {
     overflow-y: auto !important;
+    overflow-x: hidden !important;
   }
   .main-content-area {
     overflow-y: auto !important;
