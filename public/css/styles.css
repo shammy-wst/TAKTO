@@ -402,7 +402,6 @@ button:focus {
     border-radius: 0;
     background: none !important;
     padding: 0;
-    margin-right: 0.2rem;
   }
   .hamburger span {
     width: 18px;
@@ -531,6 +530,8 @@ button:focus {
     width: 95vw;
     max-width: 95vw;
     padding: 0.5rem 0.1rem;
+    max-height: 40vh;
+    overflow-y: auto;
   }
   .main-content-area {
     padding: 0.5rem 0.1rem;
@@ -562,10 +563,6 @@ button:focus {
   #static-links-container a {
     font-size: 0.93rem;
     padding: 0.08em 0.1em;
-  }
-  .sidebar {
-    max-height: 40vh;
-    overflow-y: auto;
   }
 }
 
