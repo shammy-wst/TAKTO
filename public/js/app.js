@@ -91,7 +91,6 @@
     const isDark = body.classList.contains("dark-theme");
     const icon = document.getElementById("theme-toggle-icon");
     if (icon) icon.textContent = isDark ? "☀️" : "🌙";
-    themeBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
     themeBtn.setAttribute("aria-checked", isDark ? "true" : "false");
   }
   if (themeBtn) {
@@ -416,11 +415,18 @@
     handle.setAttribute("role", "separator");
     handle.setAttribute("aria-orientation", "vertical");
     handle.setAttribute("aria-label", "Redimensionner la barre latérale");
+    // Ajout dynamique de la valeur initiale
+    function updateAriaValueNow() {
+      if (!sidebarEl) return;
+      handle.setAttribute("aria-valuenow", String(sidebarEl.offsetWidth));
+    }
+    updateAriaValueNow();
     sidebarEl.appendChild(handle);
     // Appliquer largeur sauvegardée
     var savedWidth = localStorage.getItem("takto-sidebar-width");
     if (savedWidth && !isNaN(Number(savedWidth))) {
       sidebarEl.style.width = savedWidth + "px";
+      updateAriaValueNow();
     }
     let isResizing = false;
     let startX = 0;
@@ -438,6 +444,7 @@
       let newWidth = startWidth + (e.clientX - startX);
       newWidth = Math.max(180, Math.min(newWidth, 600));
       sidebarEl.style.width = newWidth + "px";
+      updateAriaValueNow();
     });
     document.addEventListener("mouseup", function (e) {
       if (isResizing && sidebarEl) {
@@ -447,6 +454,7 @@
           "takto-sidebar-width",
           String(parseInt(sidebarEl.offsetWidth.toString(), 10))
         );
+        updateAriaValueNow();
       }
     });
     // Accessibilité clavier
@@ -458,6 +466,7 @@
         let newWidth = Math.max(180, Math.min(cur + delta, 600));
         sidebarEl.style.width = newWidth + "px";
         localStorage.setItem("takto-sidebar-width", String(newWidth));
+        updateAriaValueNow();
         e.preventDefault();
       }
     });
