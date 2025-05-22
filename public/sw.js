@@ -12,8 +12,8 @@ const URLS_TO_CACHE = [
   "/css/styles.css",
   "/js/app.js",
   "/favicon.ico",
-  "/assets/public/TAKTO BLACK.svg",
-  "/assets/public/TAKTO WHITE.svg",
+  "/TAKTO BLACK.svg",
+  "/TAKTO WHITE.svg",
 ];
 
 self.addEventListener("install", function (event) {
