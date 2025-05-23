@@ -2,18 +2,18 @@
 
 const CACHE_NAME = "takto-cache-v1";
 const URLS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/readme.html",
-  "/faq.html",
-  "/team.html",
-  "/accessibility.html",
-  "/404.html",
-  "/css/styles.css",
-  "/js/app.js",
-  "/favicon.ico",
-  "/TAKTO BLACK.svg",
-  "/TAKTO WHITE.svg",
+  "./",
+  "./index.html",
+  "./readme.html",
+  "./faq.html",
+  "./team.html",
+  "./accessibility.html",
+  "./404.html",
+  "./css/styles.css",
+  "./js/app.js",
+  "./favicon.ico",
+  "./TAKTO BLACK.svg",
+  "./TAKTO WHITE.svg",
 ];
 
 self.addEventListener("install", function (event) {
